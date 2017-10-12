@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import NavBar from './NavBar.js';
+
+class Footer extends Component {
+  render() {
+      return(
+          <footer id="foot">
+              WePark Inc.
+          </footer>
+      );
+  }
+}
 
 class App extends Component {
   render() {
@@ -13,6 +24,9 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <NavBar />
+          This is where the map goes
+        <Footer />
       </div>
     );
   }
