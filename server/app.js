@@ -23,3 +23,32 @@ models.sequelize.sync({force: false})
       console.log(`Server is up and running on port: ${PORT}`)
     });
 });
+
+//TO BE REMOVED: create fake database for testing
+models.Users.create({
+  FirstName: "Wen",
+  LastName: "Huang",
+  UserType: "Owner",
+  PhoneNumber: "6461112222",
+  Address: "1720 79th Street, Brooklyn, NY, 11214",
+  Email: "abc@abc.com"
+})
+.catch((err) => {
+  console.log(err);
+})
+.then((garage) => {
+  console.log(garage);
+})
+
+models.Garages.create({
+  Address: "1720 79th Street, Brooklyn, NY, 11214",
+  Renting_Price: 5.25,
+  Size: "car",
+  UserId: 1
+})
+.catch((err)=>{
+  console.log(err);
+})
+.then((garage) => {
+  console.log(garage);
+});
