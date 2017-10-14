@@ -1,0 +1,24 @@
+{
+    "development": {
+        "username": "ctp_user",
+        "password": "ctp_user",
+        "database": "we_park_development",
+        "host": "127.0.0.1",
+        "dialect": "postgresql",
+        "operatorsAliases": "Op"
+    },
+    "test": {
+        "username": "ctp_user",
+        "password": "ctp_user",
+        "database": "we_park_test",
+        "host": "127.0.0.1",
+        "dialect": "postgresql"
+    },
+    "production": { 
+        "username":"ctp_user",
+        "password":"ctp_user",
+        "database":"we_park_production",
+        "host":"127.0.0.1",
+        "dialect":"postgresql"
+    }
+}  
