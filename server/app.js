@@ -25,7 +25,7 @@ models.sequelize.sync({force: false})
 });
 
 //TO BE REMOVED: create fake database for testing
-models.Users.create({
+/*models.Users.create({
   FirstName: "Wen",
   LastName: "Huang",
   UserType: "Owner",
@@ -51,4 +51,4 @@ models.Garages.create({
 })
 .then((garage) => {
   console.log(garage);
-});
+});*/
