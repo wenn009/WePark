@@ -10,7 +10,7 @@ var app = express();
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.json({"hi":"wep park"});
+    res.json({"hi":"we park"});
   });
 
 app.listen(PORT, () => {
