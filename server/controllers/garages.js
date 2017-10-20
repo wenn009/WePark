@@ -14,29 +14,67 @@ const GaragesController = {
 
         return router;
     },
-    index(req, res) {
+    index(req, res) {   
         models.Garages.findAll()
-        .then(garages => {
-            res.json({
-                garages: garages
-            });
+        .then(allGarages => {
+            res.json(allGarages);
         })
-    },
-    getGarage(req, res) {
-
-    },
+    },  // Get all garages
+    getGarage(req, res) {   
+        models.Garages.findById(parseInt(req.params.id))
+        .then(garage => {
+            res.json(garage);
+        })
+    },  // Get garage by id
     getSearchResults(req, res) {
-
-    },
+        models.Garages.findAll({
+            where: {
+                zip: req.body.zip
+            }
+        })
+    },  // Get all garages by zip code
     createGarage(req, res) {
-
-    },
+        models.Garages.create({
+            Address: req.body.Address,
+            Renting_Price: req.body.Renting_Price,
+            Size: req.body.Size
+        })
+        .then(garage => {
+            res.json(poll);
+        })
+        .catch(() => {
+            res.sendStatus(400);
+        })
+    },  // Create garage by address & price
     updateGarage(req, res) {
-
-    },
+        models.Garages.findById(parseInt(req.params.id))
+        .then(garage => {
+            garage.set('Renting_Price', req.body.price);
+            garage.save();
+            res.json(garage);
+        })
+        .catch(() => {
+            console.log("Can't update");
+            res.sendStatus(400);
+        })
+    },  // Update the price for targetted garage
     deleteGarage(req, res) {
-
-    }
+        models.Garages.findById(parseInt(req.params.id))
+        .then(garage => {
+            models.Garages.destroy({
+                where: {
+                    id: garage.id
+                }
+            })
+            .then(() => {
+                res.sendStatus(201);
+            })
+        })
+        .catch(() => {
+            console.log("Can't delete");
+            res.sendStatus(400);
+        })
+    }   // Delete a specific garage
 }
 
 module.exports = GaragesController.registerRouter();

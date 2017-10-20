@@ -7,15 +7,15 @@ const models = require('./models');
 const PORT = process.env.PORT || 8000;
 
 var app = express();
+
 //allow cross origin
 app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true}));
 
-app.get('/', (req, res) => {
-    res.json({"hi":"we park"});
-  });
+const controllers = require('./controllers');
+app.use(controllers);
 
 models.sequelize.sync({force: false})
   .then(() => {
