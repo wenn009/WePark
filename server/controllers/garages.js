@@ -9,7 +9,8 @@ const GaragesController = {
         router.get('/:id', this.getGarage);
         router.get('/:zip', this.getSearchResults);
         router.post('/', this.createGarage);
-        router.put('/:id', this.updateGarage);
+        router.put('/:id', this.updatePrice);
+        router.put('/:id', this.updateAddress);
         router.delete('/:id', this.deleteGarage);
 
         return router;
@@ -46,7 +47,16 @@ const GaragesController = {
             res.sendStatus(400);
         })
     },  // Create garage by address & price
-    updateGarage(req, res) {
+    updateAddress(req, res) {
+        models.Garages.update({
+            Address: req.body.Address,
+        }, {
+            where: {
+                id: req.params.id
+            }
+        })
+    },  // Update only address of the garage
+    updatePrice(req, res) {
         models.Garages.findById(parseInt(req.params.id))
         .then(garage => {
             garage.set('Renting_Price', req.body.price);
@@ -69,6 +79,9 @@ const GaragesController = {
             .then(() => {
                 res.sendStatus(201);
             })
+        })
+        .then(() => {
+            res.redirect('/garages');
         })
         .catch(() => {
             console.log("Can't delete");
