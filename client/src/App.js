@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import NavBar from './NavBar.js';
 import Map from './Map.js';
-import GeoLocation from './GeoLocation';
 
 class Footer extends Component {
     render() {
@@ -16,6 +14,10 @@ class Footer extends Component {
 }
 
 class App extends Component {
+    componentWillMount() {
+        this.getUserLocation();
+    }
+
     constructor() {
         super();
 
@@ -42,7 +44,20 @@ class App extends Component {
                 //York College:
                 { lat: 40.701926, lng: -73.795637,},
             ],
+            longitude: 0,
+            latitude: 0,
         }
+
+        this.getUserLocation = this.getUserLocation.bind(this);
+    }
+
+    getUserLocation() {
+        navigator.geolocation.getCurrentPosition( position => {
+            this.setState({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+            });
+        });
     }
 
     render() {
@@ -50,12 +65,14 @@ class App extends Component {
             <div className="App">
                 <NavBar />
                 <Map id="testing"
-                  isMarkerShown={true} 
-                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-                  loadingElement={<div style={{ height: `100%` }} />}
-                  containerElement={<div style={{ height: `400px`, width: `98.5%`,  margin: `auto` }} />}
-                  mapElement={<div style={{ height: `100%` }} />}
-                  schools={this.state.locations}
+                    isMarkerShown={true} 
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `400px`, width: `98.5%`,  margin: `auto` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                    schools={this.state.locations}
+                    latitude={this.state.latitude}
+                    longitude={this.state.longitude}
                 />
                 <Footer />
             </div>
