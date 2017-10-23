@@ -47,7 +47,6 @@ class App extends Component {
             longitude: 0,
             latitude: 0,
         }
-
         this.getUserLocation = this.getUserLocation.bind(this);
     }
 
