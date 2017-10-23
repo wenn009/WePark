@@ -18,6 +18,10 @@ class App extends Component {
         this.getUserLocation();
     }
 
+    componentWillUpdate() {
+        this.getUserLocation();
+    }
+
     constructor() {
         super();
 
@@ -46,8 +50,10 @@ class App extends Component {
             ],
             longitude: 0,
             latitude: 0,
+            zipCode: '',
         }
         this.getUserLocation = this.getUserLocation.bind(this);
+        this.searchZip = this.searchZip.bind(this);
     }
 
     getUserLocation() {
@@ -59,10 +65,19 @@ class App extends Component {
         });
     }
 
+    searchZip(event) {
+        event.preventDefault();
+        const zip = event.target.value;
+        this.setState({
+            zipCode: zip,
+        });
+        console.log(event);
+    }
+
     render() {
         return (
             <div className="App">
-                <NavBar />
+                <NavBar handleZip={this.searchZip} value={this.state.zipCode}/>
                 <Map id="testing"
                     isMarkerShown={true} 
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
