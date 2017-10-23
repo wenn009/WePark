@@ -6,31 +6,61 @@ import Map from './Map.js';
 import GeoLocation from './GeoLocation';
 
 class Footer extends Component {
-  render() {
-      return(
-          <footer>
-              WePark Inc.
-          </footer>
-      );
-  }
+    render() {
+        return(
+            <footer>
+                WePark Inc.
+            </footer>
+        );
+    }
 }
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <NavBar />
-        <Map id="testing"
-          isMarkerShown={true} 
-          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `400px`, width: `98.5%`,  margin: `auto` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-        />
-        <Footer />
-      </div>
-    );
-  }
+    constructor() {
+        super();
+
+        this.state = {
+            locations: [
+                //Baruch College:
+                { lat: 40.740199, lng: -73.983373,},
+                //Brooklyn College:
+                { lat: 40.631439, lng: -73.954450,},
+                //CCNY:
+                { lat: 40.820043, lng: -73.949272,},
+                //CSI:
+                { lat: 40.601813, lng: -74.148491,},
+                //Hunter:
+                { lat: 40.768534, lng: -73.964630,},
+                //John Jay:
+                { lat: 40.770388, lng: -73.988498,},
+                //Lehman:
+                { lat: 40.873316, lng: -73.894139,},
+                //City Tech:
+                { lat: 40.695530, lng: -73.987457,},
+                //Queens College:
+                { lat: 40.737973, lng: -73.817240,},
+                //York College:
+                { lat: 40.701926, lng: -73.795637,},
+            ],
+        }
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <NavBar />
+                <Map id="testing"
+                  isMarkerShown={true} 
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `400px`, width: `98.5%`,  margin: `auto` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                  schools={this.state.locations}
+                />
+                <Footer />
+            </div>
+        );
+    }
 }
 
 export default App;

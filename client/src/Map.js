@@ -9,9 +9,9 @@ const Map = withScriptjs(withGoogleMap( (props) =>
         defaultZoom={16}
         defaultCenter={{ lat: 40.6314447, lng: -73.9566375 }}
     >
-    <Marker position={{ lat: 40.6314447, lng: -73.9566375 }} />
-    <Marker position={{ lat:40.731939, lng: -73.7138067 }} />
-    <Marker position={{ lat: 40.7540616, lng: -73.9955389 }} />
+    { props.schools.map( school => {
+        return <Marker position={{ lat: school.lat, lng: school.lng }} />
+    })}
     
     </GoogleMap>
 ))
