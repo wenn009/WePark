@@ -38,7 +38,7 @@ class NavBar extends Component {
                             <div className="form-group">
                                 <input type="text" className="form-control" ref="zip" placeholder="Search" onChange={this.props.handleChange}/>
                             </div>
-                            <button type="submit" className="btn btn-default">Submit</button>
+                            {/*<button type="submit" className="btn btn-default">Submit</button>*/}
                         </form>
                         <ul className="nav navbar-nav navbar-right">
                             <li className="dropdown">
