@@ -54,6 +54,7 @@ class App extends Component {
         }
         this.getUserLocation = this.getUserLocation.bind(this);
         this.searchZip = this.searchZip.bind(this);
+        this.setMapOnZipSearch = this.setMapOnZipSearch.bind(this);
     }
 
     getUserLocation() {
@@ -65,19 +66,35 @@ class App extends Component {
         });
     }
 
+    setMapOnZipSearch(lat, long) {
+        this.setState({
+            latitude: lat,
+            longitude: long,
+        });
+    }
+
     searchZip(event) {
-        event.preventDefault();
         const zip = event.target.value;
+        if(zip.length === 5) {
+            fetch('http://maps.googleapis.com/maps/api/geocode/json?address=' + zip)
+            .then( response => {
+                return response.json();
+            })
+            .then( jsonBody => {
+                let latitude = jsonBody.results[0].geometry.location.lat;
+                let longitude = jsonBody.results[0].geometry.location.lng;
+                this.setMapOnZipSearch(latitude, longitude);
+            })
+        }
         this.setState({
             zipCode: zip,
         });
-        console.log(event);
     }
 
     render() {
         return (
             <div className="App">
-                <NavBar handleZip={this.searchZip} value={this.state.zipCode}/>
+                <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip}/>
                 <Map id="testing"
                     isMarkerShown={true} 
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
