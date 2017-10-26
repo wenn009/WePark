@@ -2,15 +2,16 @@ const express = require("express");
 const models = require("../models");
 const NodeGeocoder = require("node-geocoder");
 
-var options = {
-  provider: "google",
+let options = {
+    provider: "google",
+  
+    // Optional depending on the providers
+    httpAdapter: "https", // Default
+    apiKey: "AIzaSyDDsOGdY2XBMAcCQuUjOUSuHwD_ZZ04WYQ", // for Mapquest, OpenCage, Google Premier
+    formatter: null // 'gpx', 'string', ...
+  };
 
-  // Optional depending on the providers
-  httpAdapter: "https", // Default
-  apiKey: "AIzaSyDDsOGdY2XBMAcCQuUjOUSuHwD_ZZ04WYQ", // for Mapquest, OpenCage, Google Premier
-  formatter: null // 'gpx', 'string', ...
-};
-
+let geocoder = NodeGeocoder(options); // Initialize geocoder
 
 const GaragesController = {
   registerRouter() {
@@ -18,8 +19,8 @@ const GaragesController = {
 
     router.get("/", this.index);
     router.get("/:id", this.getGarage);
-    router.get("/:zip", this.getSearchResults);
-    router.post("/geolocation", this.getLatlon);
+    router.post("/searchResults", this.getSearchResults); // Input zip and return all garages within that zip area
+    router.post("/geolocation", this.getLatlon);  // Input zip, and get latitude & lontitude of that zip area
     router.post("/", this.createGarage);
     router.put("/:id", this.updateAddress);
     router.delete("/:id", this.deleteGarage);
@@ -27,14 +28,28 @@ const GaragesController = {
     return router;
   },
   index(req, res) {
-    models.Garages.findAll().then(allGarages => {
-      res.json(allGarages);
-    });
+    models.Garages
+      .findAll()
+      .then(allGarages => {
+        if (!allGarages) {
+          res.status(400).json({msg: "no garage found"})
+        }
+        res.json(allGarages);
+      })
+      .then(() => {
+        res.status(200);
+      })
+      .catch(console.error);
   }, // Get all garages
   getGarage(req, res) {
-    models.Garages.findById(parseInt(req.params.id)).then(garage => {
-      res.json(garage);
-    });
+    models.Garages
+      .findById(parseInt(req.params.id))
+      .then(garage => {
+        res.json(garage);
+      })
+      .catch(() => {
+        res.sendStatus(404);
+      });
   }, // Get garage by id
   getSearchResults(req, res) {
     models.Garages.findAll({
@@ -44,15 +59,13 @@ const GaragesController = {
     });
   }, // Get all garages by zip code
   getLatlon(req, res) {
-    let geocoder = NodeGeocoder(options);
     geocoder
       .geocode(req.body.zip)
       .then(latlon => {
-        let location = {
-            "latitude": latlon[0].latitude,
-            "longitude": latlon[0].longitude
-        }
-        res.send(location);
+        res.send({
+            latitude: latlon[0].latitude,
+            longitude: latlon[0].longitude
+          });
       })
       .catch(err => {
         console.log("Can't return latlon");
@@ -66,11 +79,12 @@ const GaragesController = {
         Size: req.body.Size
       })
       .then(garage => {
-        console.log("Create successfully");
-        res.sendStatus(201);
+        res.send(garage);
+        // res.sendStatus(200);
       })
       .catch(() => {
-        res.sendStatus(400);
+        console.log("Can't create");
+        res.sendStatus(404);
       });
   }, // Create garage by address & price
   updateAddress(req, res) {
@@ -88,10 +102,10 @@ const GaragesController = {
         }
       )
       .then(() => {
-        res.sendStatus(201);
+        res.sendStatus(200);
       })
       .catch(() => {
-        console.log("Can't Update");
+        res.sendStatus(404);
       });
   }, // Update only address of the garage
   deleteGarage(req, res) {
@@ -105,15 +119,14 @@ const GaragesController = {
             }
           })
           .then(() => {
-            res.sendStatus(201);
+            res.sendStatus(200);
           });
       })
       .then(() => {
         res.redirect("/garages");
       })
       .catch(() => {
-        console.log("Can't delete");
-        res.sendStatus(400);
+        res.sendStatus(404);
       });
   } // Delete a specific garage
 };
