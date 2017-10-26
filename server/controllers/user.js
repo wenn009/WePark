@@ -1,5 +1,5 @@
 const express = require('express');
-const model = require('../models');
+const models = require('../models');
 
 const UserController = {
     registerRouter() {
@@ -42,7 +42,7 @@ const UserController = {
         .catch(() => {
             console.log("Can't get this user");
         })
-    },  
+    },      // Get a particular user's data
     update(req, res) {
         models.Users.update({
             FirstName: req.body.firstName,
@@ -56,7 +56,7 @@ const UserController = {
                 id: req.params.id
             }
         })
-    },
+    },  // Update a particular user's data
 };
 
 
