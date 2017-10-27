@@ -17,6 +17,7 @@ class App extends Component {
     componentWillMount() {
         this.getUserLocation();
         this.getAllGarages();
+        this.convertAddressToCoordinates(this.state.garages);
     }
 
     componentWillUpdate() {
@@ -28,28 +29,6 @@ class App extends Component {
 
         this.state = {
             garages: [],
-            locations: [
-                //Baruch College:
-                { lat: 40.740199, lng: -73.983373,},
-                //Brooklyn College:
-                { lat: 40.631439, lng: -73.954450,},
-                //CCNY:
-                { lat: 40.820043, lng: -73.949272,},
-                //CSI:
-                { lat: 40.601813, lng: -74.148491,},
-                //Hunter:
-                { lat: 40.768534, lng: -73.964630,},
-                //John Jay:
-                { lat: 40.770388, lng: -73.988498,},
-                //Lehman:
-                { lat: 40.873316, lng: -73.894139,},
-                //City Tech:
-                { lat: 40.695530, lng: -73.987457,},
-                //Queens College:
-                { lat: 40.737973, lng: -73.817240,},
-                //York College:
-                { lat: 40.701926, lng: -73.795637,},
-            ],
             longitude: 0,
             latitude: 0,
             zipCode: '',
@@ -58,6 +37,7 @@ class App extends Component {
         this.searchZip = this.searchZip.bind(this);
         this.setMapOnZipSearch = this.setMapOnZipSearch.bind(this);
         this.getAllGarages = this.getAllGarages.bind(this);
+        this.convertAddressToCoordinates = this.convertAddressToCoordinates.bind(this);
     }
 
     getUserLocation() {
@@ -82,11 +62,29 @@ class App extends Component {
             return response.json();
         })
         .then( jsonBody => {
-            this.setState({
-                garages: jsonBody,
-            });
-        })
+            this.convertAddressToCoordinates(jsonBody);
+        });
+    }
 
+    convertAddressToCoordinates(addresses) {
+        let apiKey = 'AIzaSyDpzlkHHmo0OJ-LpHIbogL1eXapd3R1N3o';
+        let convertedAddresses = addresses.map( address => {
+            let coordinates = {};
+            let apiString = address.Address.replace(/ /g, '+');
+            fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + apiString + '&key=' + apiKey)
+            .then( response => {
+                return response.json();
+            })
+            .then( jsonBody => {
+                coordinates = {
+                    lat: jsonBody.results[0].geometry.location.lat,
+                    lng: jsonBody.results[0].geometry.location.lng,
+                }
+                this.setState({
+                    garages: [...this.state.garages, coordinates],
+                });
+            });
+        });
     }
 
     searchZip(event) {
@@ -117,7 +115,7 @@ class App extends Component {
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div style={{ height: `400px`, width: `98.5%`,  margin: `auto` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
-                    schools={this.state.locations}
+                    schools={this.state.garages}
                     latitude={this.state.latitude}
                     longitude={this.state.longitude}
                 />
