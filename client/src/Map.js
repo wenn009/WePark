@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 
-const Map = withScriptjs(withGoogleMap((props) =>
+
+const Map = withScriptjs(withGoogleMap( (props) =>
     <GoogleMap
         defaultZoom={16}
-        defaultCenter={{ lat: 40.6314447, lng: -73.9566375 }}
+        defaultCenter={{ lat: props.latitude, lng: props.longitude }}
+        center={{ lat: props.latitude, lng: props.longitude }}
     >
-    {props.isMarkerShown && <Marker position={{ lat: 40.6314447, lng: -73.9566375 }} />}
+    { props.schools.map( school => {
+        return <Marker position={{ lat: school.lat, lng: school.lng }} />
+    })}
     </GoogleMap>
 ))
 
