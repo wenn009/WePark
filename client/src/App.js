@@ -16,6 +16,7 @@ class Footer extends Component {
 class App extends Component {
     componentWillMount() {
         this.getUserLocation();
+        this.getAllGarages();
     }
 
     componentWillUpdate() {
@@ -26,6 +27,7 @@ class App extends Component {
         super();
 
         this.state = {
+            garages: [],
             locations: [
                 //Baruch College:
                 { lat: 40.740199, lng: -73.983373,},
@@ -55,6 +57,7 @@ class App extends Component {
         this.getUserLocation = this.getUserLocation.bind(this);
         this.searchZip = this.searchZip.bind(this);
         this.setMapOnZipSearch = this.setMapOnZipSearch.bind(this);
+        this.getAllGarages = this.getAllGarages.bind(this);
     }
 
     getUserLocation() {
@@ -71,6 +74,19 @@ class App extends Component {
             latitude: lat,
             longitude: long,
         });
+    }
+
+    getAllGarages() {
+        fetch('http://localhost:8000/garages')
+        .then( response => {
+            return response.json();
+        })
+        .then( jsonBody => {
+            this.setState({
+                garages: jsonBody,
+            });
+        })
+
     }
 
     searchZip(event) {
