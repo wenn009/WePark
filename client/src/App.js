@@ -17,7 +17,6 @@ class App extends Component {
     componentWillMount() {
         this.getUserLocation();
         this.getAllGarages();
-        this.convertAddressToCoordinates(this.state.garages);
     }
 
     componentWillUpdate() {
