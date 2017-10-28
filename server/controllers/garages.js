@@ -32,14 +32,10 @@ const GaragesController = {
       .findAll()
       .then(allGarages => {
         if (!allGarages) {
-          res.status(400).json({msg: "no garage found"})
+          res.status(404).json({msg: "no garage found"})
         }
         res.json(allGarages);
-      })
-      .then(() => {
-        res.status(200);
-      })
-      .catch(console.error);
+      }).catch(console.error);
   }, // Get all garages
   getGarage(req, res) {
     models.Garages
@@ -48,7 +44,7 @@ const GaragesController = {
         res.json(garage);
       })
       .catch(() => {
-        res.sendStatus(404);
+        res.status(404);
       });
   }, // Get garage by id
   getSearchResults(req, res) {
@@ -67,8 +63,11 @@ const GaragesController = {
             longitude: latlon[0].longitude
           });
       })
-      .catch(err => {
-        console.log("Can't return latlon");
+      .then(location => {
+        res.json(location).send("Location returned");
+      })
+      .catch(() => {
+        res.status(404).send('error');
       });
   },
   createGarage(req, res) {
@@ -79,12 +78,11 @@ const GaragesController = {
         Size: req.body.Size
       })
       .then(garage => {
-        res.send(garage);
-        // res.sendStatus(200);
+        res.json(garage).send("Create successfully");
+        // res.status(404);
       })
       .catch(() => {
-        console.log("Can't create");
-        res.sendStatus(404);
+        res.status(404).send("Can't create");
       });
   }, // Create garage by address & price
   updateAddress(req, res) {
@@ -100,12 +98,11 @@ const GaragesController = {
             id: req.params.id
           }
         }
-      )
-      .then(() => {
-        res.sendStatus(200);
+      ).then(garage => {
+        res.json(garage).send("Update successfully");
       })
       .catch(() => {
-        res.sendStatus(404);
+        res.status(404);
       });
   }, // Update only address of the garage
   deleteGarage(req, res) {
@@ -118,15 +115,12 @@ const GaragesController = {
               id: garage.id
             }
           })
-          .then(() => {
-            res.sendStatus(200);
-          });
       })
       .then(() => {
-        res.redirect("/garages");
+        res.redirect("/garages").send("Redirect successfully");
       })
       .catch(() => {
-        res.sendStatus(404);
+        res.status(404);
       });
   } // Delete a specific garage
 };

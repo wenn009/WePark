@@ -1,10 +1,10 @@
 const request = require('supertest');
-const home = require('../../controllers/home');
+const app = require('../../app');
 
 describe('Test the home GET path', () => {
     test('It should response the GET index method', () => {
-        return request(home).get('/').then(response => {
-            expect(response).toBe("Successful GET to home router");
+        return request(app).get('/').then(response => {
+            expect(response.statusCode).toBe(200);
         })
     })
 })

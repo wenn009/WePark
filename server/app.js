@@ -19,10 +19,12 @@ app.use(controllers);
 
 models.sequelize.sync({force: false})
   .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is up and running on port: ${PORT}`)
-    });
+    // app.listen(PORT, () => {
+    //   console.log(`Server is up and running on port: ${PORT}`)
+    // });
 });
+
+module.exports = app;
 
 //TO BE REMOVED: create fake database for testing
 /*models.Users.create({
