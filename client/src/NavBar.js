@@ -40,6 +40,11 @@ class NavBar extends Component {
                             </div>
                             {/*<button type="submit" className="btn btn-default">Submit</button>*/}
                         </form>
+                        <ul className="nav navbar-nav">
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">List</a>
+                            </li>
+                        </ul>
                         <ul className="nav navbar-nav navbar-right">
                             <li className="dropdown">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span className="caret"></span></a>
