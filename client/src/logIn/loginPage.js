@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 //import Auth from '../Auth/Auth';
 import NavBar from '../NavBar';
+import Auth from '../Auth/Auth';
 
 import LoginForm from './loginForm';
 
@@ -30,6 +31,7 @@ class LoginPage extends React.Component {
 
         //TO DO Post login data.
         console.log(email);
+        
     }
 
     changeUser(event) {
@@ -41,6 +43,7 @@ class LoginPage extends React.Component {
     }
 
     render() {
+
         return (
             <div>
                 <NavBar />
