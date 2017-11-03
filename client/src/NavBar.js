@@ -42,7 +42,7 @@ class NavBar extends Component {
                         </form>
                         <ul className="nav navbar-nav">
                             <li className="nav-item">
-                                <a className="nav-link" href="#">List</a>
+                                <a className="nav-link" href="/list">List</a>
                             </li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
