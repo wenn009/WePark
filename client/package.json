@@ -6,6 +6,8 @@
     "peer": "^0.2.8",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-geolocated": "^2.1.0",
+    "react-geolocation": "^1.0.3",
     "react-google-maps": "^8.5.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
