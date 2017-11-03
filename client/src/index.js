@@ -5,12 +5,13 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter, Route } from 'react-router-dom';
 import NavBar from './NavBar';
+import GarageListContainer from './garageList';
 
 ReactDOM.render(
     <BrowserRouter>
         <div>
             <Route exact path='/' component={App} />
-            <Route exact path='/list' render={ () => <h1>Garage List</h1>} />
+            <Route exact path='/list' component={GarageListContainer} />
         </div>
     </BrowserRouter>, 
     document.getElementById('root')
