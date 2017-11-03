@@ -13,7 +13,10 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.1",
+    "jest": "^21.2.1",
+    "node-geocoder": "^3.21.0",
     "pg": "^7.3.0",
-    "sequelize": "^4.13.0"
+    "sequelize": "^4.13.0",
+    "supertest": "^3.0.0"
   }
 }
