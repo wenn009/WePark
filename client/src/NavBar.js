@@ -25,6 +25,7 @@ class NavBar extends Component {
         super();
         this.state = {
             accountLinks: ['Testing', 'Link', 'Prop', 'Here'],
+            zip: '',
         }
     }
 
@@ -43,12 +44,17 @@ class NavBar extends Component {
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <form className="navbar-form navbar-left">
+                        <form className="navbar-form navbar-left" onSubmit={this.props.searchZip}>
                             <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Search" />
+                                <input type="text" className="form-control" ref="zip" placeholder="Search" onChange={this.props.handleChange}/>
                             </div>
-                            <button type="submit" className="btn btn-default">Submit</button>
+                            {/*<button type="submit" className="btn btn-default">Submit</button>*/}
                         </form>
+                        <ul className="nav navbar-nav">
+                            <li className="nav-item">
+                                <a className="nav-link" href="/list">List</a>
+                            </li>
+                        </ul>
                         <ul className="nav navbar-nav navbar-right">
                             {Auth.isUserAuthenticated() ?
                                 (
