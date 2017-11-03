@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import './garageListStyles.css';
 
+const EmptyGarageList = (props) => 
+    <div className="panel panel-default garageWidth">
+        <div className="panel-heading">
+            <h3 className="panel-title">No Garages Near You</h3>
+        </div>
+        <div className="panel-body">
+            No garages found!
+        </div>
+    </div>;
+
 class GarageItem extends Component {    
     render() {
         return(
@@ -50,10 +60,17 @@ export default class GarageListContainer extends Component {
     }
 
     render() {
+        let garageData = null;
+        if(this.state.garages.length === 0) {
+            garageData = <EmptyGarageList />
+        } else {
+            garageData = this.state.garages;
+        }
+
         return(
             <div id="listPageDiv">
                 <NavBar />
-                { this.state.garages }
+                { garageData }
             </div>
         );
     }
