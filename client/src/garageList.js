@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import NavBar from './NavBar';
+import './garageListStyles.css';
 
 class GarageItem extends Component {    
     render() {
         return(
-            <div className="panel panel-default">
+            <div className="panel panel-default garageWidth">
                 <div className="panel-heading">
                     <h3 className="panel-title">{ this.props.garage.id }</h3>
                 </div>
@@ -49,7 +51,10 @@ export default class GarageListContainer extends Component {
 
     render() {
         return(
-            this.state.garages
+            <div id="listPageDiv">
+                <NavBar />
+                { this.state.garages }
+            </div>
         );
     }
 }
