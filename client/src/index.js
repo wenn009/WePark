@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import LoginPage from './logIn/loginPage';
-import SignupPage from './SignUp/signupPage';
+import AppRoute from './AppRoute';
 
-//ReactDOM.render(<App />, document.getElementById('root'));
-ReactDOM.render(<SignupPage />, document.getElementById('root'));
+ReactDOM.render(<AppRoute />, document.getElementById('root'));
+//ReactDOM.render(<SignupPage />, document.getElementById('root'));
+
+
 registerServiceWorker();

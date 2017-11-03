@@ -19,7 +19,7 @@ class SignupPage extends React.Component {
                 lastName: '',
                 phoneNumber: '',
                 address: '',
-                userType: ''
+                userType: 'Regular'
             }
         };
 
@@ -49,7 +49,7 @@ class SignupPage extends React.Component {
         }
         this.setState({errors});
         //TO DO Post sign up data.
-        console.log(email);
+        console.log(this.state.user);
     }
 
     changeUser(event) {

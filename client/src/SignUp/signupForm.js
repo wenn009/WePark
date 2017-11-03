@@ -72,11 +72,11 @@ const SignupForm = ({
                         <div class="row">
                             <div className="input-group col-md-6 col-sm-6">
                                 <div class="radio">
-                                    <label><input type="radio" name="optradio" />Seller</label>
+                                    <label><input type="radio" name="userType" value="Seller" onChange = {onChange} />Seller</label>
                                 </div>
                             
                                 <div class="radio">
-                                    <label><input type="radio" name="optradio" checked/>Regular User</label>
+                                    <label><input type="radio" name="userType" value="Regular" onChange={onChange} checked/>Regular User</label>
                                 </div>
                             </div>
                         </div>
