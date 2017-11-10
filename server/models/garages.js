@@ -1,8 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const Garages = sequelize.define('Garages',{
         Address: DataTypes.STRING,
-        Renting_Price: DataTypes.DOUBLE(10,2),
-        Size: DataTypes.STRING
+        Renting_Price: DataTypes.DECIMAL(10,2),
+        Size: DataTypes.STRING,
+        Zip: DataTypes.INTEGER(5)
     });
 
     Garages.associate = (models) => {

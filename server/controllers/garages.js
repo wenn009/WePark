@@ -22,7 +22,6 @@ const GaragesController = {
     router.get("/:id", this.getGarage);
     router.post("/searchResults", this.getSearchResults); // Input zip and return all garages within that zip area
     router.post("/", this.createGarage);
-    router.post("/:id/garageAddress", this.addAddress);
     router.put("/:id", this.updateAddress);
     router.delete("/:id", this.deleteGarage);
 
@@ -49,11 +48,12 @@ const GaragesController = {
       });
   }, // Get garage by id
   getSearchResults(req, res) {
-    models.ZipCode.findAll({
+    models.Garages.findAll({
       where: {
         zip: req.body.zip
       }
-    }).then(garages => {
+    })
+    .then(garages => {
       res.json(garages).send("Result list received");
     }).catch(() => {
       res.status(404).send("Failed in receive results");
@@ -62,39 +62,18 @@ const GaragesController = {
   createGarage(req, res) {
     models.Garages
       .create({
+        Address: req.body.Address,
         Renting_Price: req.body.Renting_Price,
-        Size: req.body.Size
+        Size: req.body.Size,
+        Zip: req.body.Zip
       })
       .then(garage => {
         res.json(garage).send("Create successfully");
-        // res.status(404);
       })
       .catch(() => {
         res.status(404).send("Can't create garage");
       });
   }, // Create garage by address & price
-  addAddress(req, res) {
-    /*
-    models.Garages.findById(parseInt(req.params.id))
-    .then(garage => {
-      geocoder.geocode(garage.body.Address)
-      .then(address => {
-        models.GarageAddress.create({
-          latitude: address[0].latitude,
-          longtitude: address[0].longtitude,
-          country: address[0].country,
-          city: address[0].city,
-          streetName: address[0].streetName + address[0].streetNumber,
-          zip: address[0].zipcode
-        }).then(garageAddress => {
-          models.ZipCode.create({
-            
-          })
-        })
-      })
-    })
-    */
-  },
   updateAddress(req, res) {
     models.Garages
       .update(

@@ -1,13 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-    const TimeSlot = sequelize.define('TimeSlot', {
+    const timeSlot = sequelize.define('timeSlot', {
         StartTime: DataTypes.DATE,
         EndTime: DataTypes.DATE
     });
 
-    TimeSlot.associate = (models) => {
-        models.TimeSlot.belongsTo(models.TimeSheet);
-        models.TimeSlot.belongsTo(models.UserRecord);
+    timeSlot.associate = (models) => {
+        models.timeSlot.belongsTo(models.timeSheet);
+        // models.TimeSlot.belongsTo(models.UserRecord);
     }
-
-    return TimeSlot;
+    return timeSlot;
 }

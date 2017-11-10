@@ -1,9 +1,9 @@
-module.exports = (sequelize, DataTypes) => {
-    const UserRecord = sequelize.define('UserRecord');
+// module.exports = (sequelize, DataTypes) => {
+//     const userRecord = sequelize.define('userRecord');
 
-    UserRecord.associate = (models) => {
-        models.UserRecord.hasMany(models.TimeSlot);
-    };
+//     userRecord.associate = (models) => {
+//         models.UserRecord.hasMany(models.timeSlot);
+//     };
 
-    return UserRecord;
-}
+//     return userRecord;
+// }

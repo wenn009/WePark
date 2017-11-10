@@ -1,12 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
-    const TimeSheet = sequelize.define('TimeSheet', {
+    const timeSheet = sequelize.define('timeSheet');
 
-    });
-
-    TimeSheet.associate = (models) => {
-        models.TimeSheet.hasMany(models.TimeSlot);
-        models.TimeSheet.belongsTo(models.Garages);
+    timeSheet.associate = (models) => {
+        models.timeSheet.hasMany(models.timeSlot);
+        models.timeSheet.belongsTo(models.Garages);
     }
 
-    return TimeSheet;
+    return timeSheet;
 }

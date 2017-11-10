@@ -13,11 +13,11 @@ const TimeSheetController = {
     return router;
   },
   index(req, res) {
-    models.TimeSheet.findById(req.params.id),
+    models.timeSheet.findById(req.params.id),
       {
         include: [
           {
-            model: models.TimeSlot
+            model: models.timeSlot
           }
         ]
       }
@@ -29,10 +29,10 @@ const TimeSheetController = {
         });
   },
   scheduleTimeSlot(req, res) {
-    models.TimeSheet
+    models.timeSheet
       .findById(req.params.id)
       .then(() => {
-        models.TimeSlot.create({
+        models.timeSlot.create({
           StartTime: req.body.StartTime,
           EndTime: req.body.EndTime
         });
@@ -45,10 +45,10 @@ const TimeSheetController = {
       });
   },
   updateTimeSlot(req, res) {
-    models.TimeSheet
+    models.timeSheet
       .findById(req.params.id)
       .then(timeslot => {
-        models.TimeSlot.update(
+        models.timeSlot.update(
           {
             StartTime: req.body.StartTime,
             EndTime: req.body.EndTime
@@ -68,8 +68,8 @@ const TimeSheetController = {
       });
   },
   deleteTimeSlot(req, res) {
-    models.TimeSheet.findById(req.params.id).then(timeSlot => {
-      models.TimeSheet
+    models.timeSheet.findById(req.params.id).then(timeSlot => {
+      models.timeSheet
         .destroy({
           where: {
             id: timeSlot.id
