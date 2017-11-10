@@ -20,10 +20,21 @@ class GarageItem extends Component {
                     <h3 className="panel-title">{ this.props.garage.id }</h3>
                 </div>
                 <div className="panel-body">
-                    Address: { this.props.garage.Address } <br />
-                    Renting Price: { this.props.garage.Renting_Price } <br />
-                    Size: { this.props.garage.Size } <br />
-                    Date Listed: { this.props.garage.createdAt } <br />
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-xs-12 col-sm-6 col-md-3">
+                                <a href="#" className="thumbnail">
+                                    <img src="http://weknowyourdreams.com/images/house/house-04.jpg" className="img-fluid" />
+                                </a>
+                            </div>
+                            <div className="col-xs-12 col-sm-12 col-md-9">
+                                Address: { this.props.garage.Address } <br />
+                                Renting Price: { this.props.garage.Renting_Price } <br />
+                                Size: { this.props.garage.Size } <br />
+                                Date Listed: { this.props.garage.createdAt } <br />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
