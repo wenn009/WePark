@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavBar from './NavBar';
+import NavBar from '../NavBar';
 
 class GarageData extends Component {
     constructor() {
@@ -15,7 +15,7 @@ class GarageData extends Component {
     }
 
     getGarageData() {
-        fetch('http://localhost:8000/garages/' + this.props.id)
+        fetch('http://localhost:8000/garages/' + this.props.idNumber)
             .then(response => {
                 return response.json();
             })
@@ -38,7 +38,7 @@ export default class GarageSchedule extends Component {
         return(
             <div>
                 <NavBar />
-                <GarageData id={ this.props.match.params.number } />
+                <GarageData idNumber={ this.props.match.params.number } />
             </div>
         );
     }

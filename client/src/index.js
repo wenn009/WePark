@@ -11,7 +11,7 @@ import AppRoute from './AppRoute';
 import { BrowserRouter, Route } from 'react-router-dom';
 import NavBar from './NavBar';
 import GarageListContainer from './garageList';
-import GarageSchedule from './garageSchedule';
+import GarageSchedule from './Garages/garageSchedule';
 
 ReactDOM.render(
     <BrowserRouter>
