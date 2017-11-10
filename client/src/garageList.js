@@ -50,7 +50,7 @@ export default class GarageListContainer extends Component {
         })
         .then( jsonBody => {
             jsonBody.forEach( garage => console.log(garage));
-            const garageObjects = jsonBody.map( garage => <GarageItem garage={garage} />);
+            const garageObjects = jsonBody.map( (garage, index) => <GarageItem garage={garage} key={index} />);
             console.log(garageObjects);
             this.setState({
                 garages: garageObjects,
