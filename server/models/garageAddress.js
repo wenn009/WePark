@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 
     GarageAddress.associate = (models) => {
         models.GarageAddress.belongsTo(models.Garages);
+        models.GarageAddress.belongsTo(models.ZipCode);
     }
 
     return GarageAddress;

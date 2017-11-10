@@ -1,5 +1,18 @@
 const express = require("express");
 const models = require("../models");
+const NodeGeocoder = require("node-geocoder");
+
+let options = {
+  provider: "google",
+
+  // Optional depending on the providers
+  httpAdapter: "https", // Default
+  apiKey: "AIzaSyDDsOGdY2XBMAcCQuUjOUSuHwD_ZZ04WYQ", // for Mapquest, OpenCage, Google Premier
+  formatter: null // 'gpx', 'string', ...
+};
+
+let geocoder = NodeGeocoder(options); // Initialize geocoder
+
 
 const GaragesController = {
   registerRouter() {
@@ -9,6 +22,7 @@ const GaragesController = {
     router.get("/:id", this.getGarage);
     router.post("/searchResults", this.getSearchResults); // Input zip and return all garages within that zip area
     router.post("/", this.createGarage);
+    router.post("/:id/garageAddress", this.addAddress);
     router.put("/:id", this.updateAddress);
     router.delete("/:id", this.deleteGarage);
 
@@ -48,7 +62,6 @@ const GaragesController = {
   createGarage(req, res) {
     models.Garages
       .create({
-        Address: req.body.Address,
         Renting_Price: req.body.Renting_Price,
         Size: req.body.Size
       })
@@ -60,6 +73,28 @@ const GaragesController = {
         res.status(404).send("Can't create garage");
       });
   }, // Create garage by address & price
+  addAddress(req, res) {
+    /*
+    models.Garages.findById(parseInt(req.params.id))
+    .then(garage => {
+      geocoder.geocode(garage.body.Address)
+      .then(address => {
+        models.GarageAddress.create({
+          latitude: address[0].latitude,
+          longtitude: address[0].longtitude,
+          country: address[0].country,
+          city: address[0].city,
+          streetName: address[0].streetName + address[0].streetNumber,
+          zip: address[0].zipcode
+        }).then(garageAddress => {
+          models.ZipCode.create({
+            
+          })
+        })
+      })
+    })
+    */
+  },
   updateAddress(req, res) {
     models.Garages
       .update(
