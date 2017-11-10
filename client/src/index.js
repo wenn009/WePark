@@ -12,6 +12,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import NavBar from './NavBar';
 import GarageListContainer from './garageList';
 import GarageSchedule from './Garages/garageSchedule';
+import SignUpPage from './SignUp/signup';
 
 ReactDOM.render(
     <BrowserRouter>
@@ -19,6 +20,7 @@ ReactDOM.render(
             <Route exact path='/' component={App} />
             <Route exact path='/list' component={GarageListContainer} />
             <Route path='/garage/:number' component={GarageSchedule} />
+            <Route exact path='/signup' component={SignUpPage} />
         </div>
     </BrowserRouter>, 
     document.getElementById('root')
