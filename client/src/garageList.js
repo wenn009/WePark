@@ -23,7 +23,7 @@ class GarageItem extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-xs-12 col-sm-6 col-md-3">
-                                <a href="#" className="thumbnail">
+                                <a href={'/garage/'+this.props.idNumber} className="thumbnail">
                                     <img src="http://weknowyourdreams.com/images/house/house-04.jpg" className="img-fluid" />
                                 </a>
                             </div>
@@ -60,9 +60,7 @@ export default class GarageListContainer extends Component {
             return response.json();
         })
         .then( jsonBody => {
-            jsonBody.forEach( garage => console.log(garage));
-            const garageObjects = jsonBody.map( (garage, index) => <GarageItem garage={garage} key={index} />);
-            console.log(garageObjects);
+            const garageObjects = jsonBody.map( (garage, index) => <GarageItem garage={garage} key={index} idNumber={garage.id} />);
             this.setState({
                 garages: garageObjects,
             })
