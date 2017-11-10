@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const config = require('');
+const config = require('../config/config.json');
+const Users = require('../models').Users;
 
 module.exports = (req, res, next) => {
     console.log('auth req: ' + req.headers);
@@ -17,7 +18,15 @@ module.exports = (req, res, next) => {
         const email = decoded.sub;
 
         //return the user
-
-        return next();
+        Users.findOne({
+            where: {
+                Email: email
+            }
+        }) .then((user) => {
+            if(!user){
+                return res.status(401).end();
+            }
+            return next();
+        });       
     });
 };

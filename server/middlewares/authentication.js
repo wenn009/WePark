@@ -13,7 +13,7 @@ passport.use(new LocalStrategy({
   },
   (email, password, done) => {
     Users.findOne({
-      where: { email },
+      where: { Email: email },
     }).then((user) => {
       if(!user) {
         return done(null, false, { message: 'Incorrect email.' });
@@ -27,6 +27,7 @@ passport.use(new LocalStrategy({
     });
   })
 );
+
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
