@@ -50,7 +50,7 @@ const GaragesController = {
   getSearchResults(req, res) {
     models.Garages.findAll({
       where: {
-        zip: req.body.zip
+        Zip: req.body.Zip
       }
     })
     .then(garages => {
@@ -60,12 +60,13 @@ const GaragesController = {
     });
   }, // Get all garages by zip code
   createGarage(req, res) {
-    models.Garages
-      .create({
+    geocoder.geocode(req.body.Address)
+    .then(address => {
+      models.Garages.create({
         Address: req.body.Address,
         Renting_Price: req.body.Renting_Price,
         Size: req.body.Size,
-        Zip: req.body.Zip
+        Zip: address[0].zipcode
       })
       .then(garage => {
         res.json(garage).send("Create successfully");
@@ -73,14 +74,18 @@ const GaragesController = {
       .catch(() => {
         res.status(404).send("Can't create garage");
       });
+    })
   }, // Create garage by address & price
   updateAddress(req, res) {
-    models.Garages
+    geocoder.geocode(req.body.Address)
+    .then(address => {
+      models.Garages
       .update(
         {
           Address: req.body.Address,
           Renting_Price: req.body.Renting_Price,
-          Size: req.body.Size
+          Size: req.body.Size,
+          Zip: address[0].zipcode
         },
         {
           where: {
@@ -93,6 +98,7 @@ const GaragesController = {
       .catch(() => {
         res.status(404).send("Can't update garage");
       });
+    })
   }, // Update only address of the garage
   deleteGarage(req, res) {
     models.Garages
