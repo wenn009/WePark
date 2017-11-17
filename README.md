@@ -1,11 +1,11 @@
 # WePark 
-Imagine a time where you are desperately finding yourself a parking lot at a street, and I guess you don't like that. WePark is here to save your time, with WePark, you never worry about find parking anymore. 
+Imagine a time where you are desperately finding yourself a parking lot at a street, and I guess you don't like that. WePark is here to save your time. With WePark, you never worry about find parking anymore. 
 
 ## Stack requirement: 
 * Frontend: React (create-react-app)
 * Backend: Node.js (Express.js)
-* Database: MongoDB 
-* API: Address related API
+* Database: PostgreSQL 
+* API: Google Map API
 
 ## Use case: 
 * Users(Owner) can check and upload their garage for renting temporarily
