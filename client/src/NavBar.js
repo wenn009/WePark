@@ -40,7 +40,7 @@ class NavBar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="/">WePark</a>
+                        <div className="navbar-brand" ><Link to='/'>WePark</Link></div>
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -69,8 +69,7 @@ class NavBar extends Component {
                                 ) :
                                 (
                                     <li className="dropdown"><Link to="/signup">Sign up</Link></li>
-                                )
-                            }
+                                )}
 
 
                         </ul>

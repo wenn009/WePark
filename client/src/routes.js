@@ -22,7 +22,6 @@ export default () => (
             <Route path='/login' exact component={Login}/>
             <Route path='/signup' exact component={Signup}/>
             </Switch>
-
         </Router>
 )
 /*const Routes = () => (

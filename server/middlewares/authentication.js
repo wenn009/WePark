@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt-nodejs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
+const jwt = require('jsonwebtoken');
+const config = require('../config/config.json');
 const Users = require('../models').Users;
 
 function passwordsMatch(passwordSubmitted, storedPassword) {
@@ -10,23 +11,41 @@ function passwordsMatch(passwordSubmitted, storedPassword) {
 
 passport.use(new LocalStrategy({
     usernameField: 'email',
+    session: false,
+    passReqToCallback: true
   },
-  (email, password, done) => {
+  (req, email, password, done) => {
+    const userData = {
+      email: email,
+      password: password
+    };
     Users.findOne({
-      where: { email },
+      where: { Email: email },
     }).then((user) => {
       if(!user) {
-        return done(null, false, { message: 'Incorrect email.' });
+        return done(null, false, { message: 'Incorrect CredientialsError.' });
       }
 
       if (passwordsMatch(password, user.password_hash) === false) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, { message: 'Incorrect CredientialsError.' });
       }
 
-      return done(null, user, { message: 'Successfully Logged In!' });
+      const payload = {
+        sub: user._id
+      }
+
+      const token = jwt.sign(payload, config.jwtSecret);
+      const data = {
+        name: user.Email
+      }
+      return done(null, token, data);
+    })
+    .catch(err=>{
+      return done(null, false, { message : 'Incorrect CredientialsError.'});
     });
   })
 );
+
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -42,10 +61,6 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-passport.redirectIfLoggedIn = (route) =>
-  (req, res, next) => (req.user ? res.redirect(route) : next());
 
-passport.redirectIfNotLoggedIn = (route) =>
-  (req, res, next) => (req.user ? next() : res.redirect(route));
 
 module.exports = passport;
