@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 
+function testingFunction(url) {
+    window.location = url;
+}
 
 const Map = withScriptjs(withGoogleMap( (props) =>
     <GoogleMap
@@ -8,8 +11,12 @@ const Map = withScriptjs(withGoogleMap( (props) =>
         defaultCenter={{ lat: props.latitude, lng: props.longitude }}
         center={{ lat: props.latitude, lng: props.longitude }}
     >
-    { props.schools.map( school => {
-        return <Marker position={{ lat: school.lat, lng: school.lng }} />
+    { props.garages.map( (garage, index) => {
+        let urlPath = '/garage/' + garage.id;
+        return <Marker position={{ lat: garage.lat, lng: garage.lng }} 
+                    key={index}
+                    onClick={ () => testingFunction(urlPath) }
+                />
     })}
     </GoogleMap>
 ))

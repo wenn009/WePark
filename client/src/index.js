@@ -13,6 +13,7 @@ import AppRoute from './AppRoute';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import NavBar from './NavBar';
 import GarageListContainer from './garageList';
+import GarageSchedule from './Garages/garageSchedule';
 
 ReactDOM.render(
     <BrowserRouter>
@@ -21,6 +22,7 @@ ReactDOM.render(
             <Route exact path='/list' component={GarageListContainer} />
             <Route path='/login' exact component={Login}/>
             <Route path='/signup' exact component={Signup}/>
+            <Route path='/garage/:number' component={GarageSchedule} />
         </Switch>
     </BrowserRouter>, 
     document.getElementById('root')

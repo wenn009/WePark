@@ -24,6 +24,8 @@ models.sequelize.sync({force: false})
     });
 });
 
+module.exports = app;
+
 //TO BE REMOVED: create fake database for testing
 /*models.Users.create({
   FirstName: "Wen",
