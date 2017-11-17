@@ -1,6 +1,7 @@
 const express = require("express");
 const models = require("../models");
 const NodeGeocoder = require("node-geocoder");
+const geolib = require("geolib");
 
 let options = {
   provider: "google",
@@ -47,24 +48,6 @@ const GaragesController = {
         res.status(404);
       });
   }, // Get garage by id
-  getDistanceFromLatlon(lat1, lon1, lat2, lon2) {
-    var R = 6371; // Radius of the earth in km
-    var dLat = deg2rad(lat2 - lat1); // deg2rad below
-    var dLon = deg2rad(lon2 - lon1);
-    var a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(deg2rad(lat1)) *
-        Math.cos(deg2rad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c; // Distance in km
-    console.log(d);
-    return d;
-  },
-  deg2rad(deg) {
-    return deg * (Math.PI / 180);
-  },
   getSearchResults(req, res) {
     models.Garages
       .findAll({
@@ -73,18 +56,22 @@ const GaragesController = {
         }
       })
       .then(garage => {
-        geocoder.geocode(garage.Address).then(address => {
-          // Get distance between your location and the private garage
-          getDistanceFromLatlon(
-            req.body.lat,
-            req.body.lon,
-            address[0].latitude,
-            address[0].longitude
-          );
+        garage.forEach(g => {
+          geocoder
+            .geocode(g.dataValues.Address)
+            .then(address => {
+              let dist = geolib.getDistance(
+                { latitude: req.body.lat, longitude: req.body.lon },
+                {
+                  latitude: address[0].latitude,
+                  longitude: address[0].longitude
+                }
+              );
+              models.Garages.update({Distance: dist}, {where: {Address: g.dataValues.Address}});
+            })
         });
-      })
-      .then(garages => {
-        res.json(garages).send("Result list received");
+
+        res.json(garage).send("Result list received");
       })
       .catch(() => {
         res.status(404).send("Failed in receive results");

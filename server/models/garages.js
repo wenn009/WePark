@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
         Address: DataTypes.STRING,
         Renting_Price: DataTypes.DECIMAL(10,2),
         Size: DataTypes.STRING,
-        Zip: DataTypes.INTEGER(5)
+        Zip: DataTypes.INTEGER(5),
+        Distance: DataTypes.INTEGER
     });
 
     Garages.associate = (models) => {
