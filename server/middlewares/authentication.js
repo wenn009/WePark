@@ -41,7 +41,7 @@ passport.use(new LocalStrategy({
       return done(null, token, data);
     })
     .catch(err=>{
-      return done(null, false, { message : 'sequelizer error'});
+      return done(null, false, { message : 'Incorrect CredientialsError.'});
     });
   })
 );
