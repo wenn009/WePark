@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 //import Auth from '../Auth/Auth';
 import NavBar from '../NavBar';
 import Auth from '../Auth/Auth';
+import { BrowserRouter as router, Redirect } from 'react-router-dom';
 
 import LoginForm from './loginForm';
 
@@ -50,6 +51,8 @@ class LoginPage extends React.Component {
                     console.log(json);
                     Auth.authenticateUser(json.token, email);
                 })
+
+
             } else {
                 console.log('Login failed');
                 response.json().then(json => {
@@ -73,17 +76,22 @@ class LoginPage extends React.Component {
 
     render() {
 
-        return (
-            <div>
-                <NavBar />
-                <LoginForm
-                    onSubmit={this.processForm}
-                    onChange={this.changeUser}
-                    errors={this.state.errors}
-                    user={this.state.user}
-                />
-            </div>
-        );
+        if (Auth.isUserAuthenticated()) {
+            return <Redirect to='/' push={true} />
+        } else {
+            return (
+                <div>
+                    <NavBar />
+
+                    <LoginForm
+                        onSubmit={this.processForm}
+                        onChange={this.changeUser}
+                        errors={this.state.errors}
+                        user={this.state.user}
+                    />
+                </div>
+            );
+        }
     }
 }
 
