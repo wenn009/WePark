@@ -1,0 +1,9 @@
+#listPageDiv {
+    width: 100%;
+}
+
+.garageWidth {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}

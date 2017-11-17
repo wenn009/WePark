@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
+import Auth from './Auth/Auth';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    withRouter
+} from 'react-router-dom'
 
-class AccountActions extends Component{
+
+class AccountActions extends Component {
     render() {
-        return(
+        return (
             <ul className="dropdown-menu">
-                { this.props.links.map( name => <li><a href="#">{name}</a></li>) }
+                {this.props.links.map(name => <li><a href="#">{name}</a></li>)}
             </ul>
         );
     }
 }
+
+
 
 class NavBar extends Component {
     constructor() {
@@ -20,7 +30,7 @@ class NavBar extends Component {
     }
 
     render() {
-        return(
+        return (
             <nav className="navbar navbar-default">
                 <div className="container-fluid">
                     <div className="navbar-header">
@@ -30,9 +40,9 @@ class NavBar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="#">WePark</a>
+                        <a className="navbar-brand" href="/">WePark</a>
                     </div>
-          
+
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <form className="navbar-form navbar-left" onSubmit={this.props.searchZip}>
                             <div className="form-group">
@@ -40,11 +50,29 @@ class NavBar extends Component {
                             </div>
                             {/*<button type="submit" className="btn btn-default">Submit</button>*/}
                         </form>
-                        <ul className="nav navbar-nav navbar-right">
-                            <li className="dropdown">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span className="caret"></span></a>
-                                <AccountActions links={this.state.accountLinks} />
+                        <ul className="nav navbar-nav">
+                            <li className="nav-item">
+                                <a className="nav-link" href="/list">List</a>
                             </li>
+                        </ul>
+                        <ul className="nav navbar-nav navbar-right">
+                            {Auth.isUserAuthenticated() ?
+                                (
+                                    <li className="dropdown">{Auth.getEmail()}</li>
+                                ) :
+                                (
+                                    <li className="dropdown"><Link to="/login">Log in</Link></li>
+                                )}
+                            {Auth.isUserAuthenticated() ?
+                                (
+                                    <li className="dropdown"><Link to="/logout">Log out</Link></li>
+                                ) :
+                                (
+                                    <li className="dropdown"><Link to="/signup">Sign up</Link></li>
+                                )
+                            }
+
+
                         </ul>
                     </div>
                 </div>
@@ -54,3 +82,8 @@ class NavBar extends Component {
 }
 
 export default NavBar;
+//<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span className="caret"></span></a>
+//<AccountActions links={this.state.accountLinks} />
+/* 
+*/
+
