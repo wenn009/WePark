@@ -1,5 +1,5 @@
 const express = require('express');
-const passport = require('passport');
+const passport = require('../middlewares/authentication');
 const validator = require('validator');
 const models = require('../models');
 //const passport = require('../middlewares/authentication');
@@ -66,12 +66,29 @@ router.post('/login', (req, res, next) => {
     })
   }
 
-  passport.authenticate('local', {
-    success: 
-  }
+  passport.authenticate('local', (err, token, userData) => {
+    if(err){
+      if(err.name === 'IncorrectCredentialsError'){
+        return res.status(400).json({
+          success: false,
+          message: err.message,
+        }); 
+      }
+      return res.status(400).json({
+        success: false,
+        message: 'Could not process the form: ' + err.message
+      });
+    }
+    return res.json({
+      success: true,
+      message: 'You have successfully logged in!',
+      token,
+      user: userData
+    });
+  })(req, res, next);
+
 
 });
-
 
 function validateSignupForm(payload){
   console.log(payload);
@@ -120,7 +137,5 @@ function validateLoginForm(payload){
     errors
   };
 }
-
-
 
 module.exports = router;
