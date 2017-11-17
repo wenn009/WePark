@@ -68,17 +68,19 @@ class App extends Component {
     convertAddressToCoordinates(addresses) {
         let apiKey = 'AIzaSyDpzlkHHmo0OJ-LpHIbogL1eXapd3R1N3o';
         let convertedAddresses = addresses.map( address => {
-            let coordinates = {};
+            let coordinates = {
+                id: address.id,
+                lat: 0,
+                lng: 0,
+            };
             let apiString = address.Address.replace(/ /g, '+');
             fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + apiString + '&key=' + apiKey)
             .then( response => {
                 return response.json();
             })
             .then( jsonBody => {
-                coordinates = {
-                    lat: jsonBody.results[0].geometry.location.lat,
-                    lng: jsonBody.results[0].geometry.location.lng,
-                }
+                coordinates.lat = jsonBody.results[0].geometry.location.lat;
+                coordinates.lng = jsonBody.results[0].geometry.location.lng;
                 this.setState({
                     garages: [...this.state.garages, coordinates],
                 });
@@ -114,7 +116,7 @@ class App extends Component {
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div style={{ height: `400px`, width: `98.5%`,  margin: `auto` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
-                    schools={this.state.garages}
+                    garages={this.state.garages}
                     latitude={this.state.latitude}
                     longitude={this.state.longitude}
                 />
