@@ -13,7 +13,6 @@ let options = {
 
 let geocoder = NodeGeocoder(options); // Initialize geocoder
 
-
 const GaragesController = {
   registerRouter() {
     const router = express.Router();
@@ -32,10 +31,11 @@ const GaragesController = {
       .findAll()
       .then(allGarages => {
         if (!allGarages) {
-          res.status(404).json({msg: "no garage found"})
+          res.status(404).json({ msg: "no garage found" });
         }
         res.json(allGarages);
-      }).catch(console.error);
+      })
+      .catch(console.error);
   }, // Get all garages
   getGarage(req, res) {
     models.Garages
@@ -47,69 +47,99 @@ const GaragesController = {
         res.status(404);
       });
   }, // Get garage by id
+  getDistanceFromLatlon(lat1, lon1, lat2, lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2 - lat1); // deg2rad below
+    var dLon = deg2rad(lon2 - lon1);
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) *
+        Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c; // Distance in km
+    console.log(d);
+    return d;
+  },
+  deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  },
   getSearchResults(req, res) {
-    models.Garages.findAll({
-      where: {
-        Zip: req.body.Zip
-      }
-    })
-    .then(garages => {
-      res.json(garages).send("Result list received");
-    }).catch(() => {
-      res.status(404).send("Failed in receive results");
-    });
-  }, // Get all garages by zip code
-  createGarage(req, res) {
-    geocoder.geocode(req.body.Address)
-    .then(address => {
-      models.Garages.create({
-        Address: req.body.Address,
-        Renting_Price: req.body.Renting_Price,
-        Size: req.body.Size,
-        Zip: address[0].zipcode
+    models.Garages
+      .findAll({
+        where: {
+          Zip: req.body.Zip
+        }
       })
       .then(garage => {
-        res.json(garage).send("Create successfully");
+        geocoder.geocode(garage.Address).then(address => {
+          // Get distance between your location and the private garage
+          getDistanceFromLatlon(
+            req.body.lat,
+            req.body.lon,
+            address[0].latitude,
+            address[0].longitude
+          );
+        });
+      })
+      .then(garages => {
+        res.json(garages).send("Result list received");
       })
       .catch(() => {
-        res.status(404).send("Can't create garage");
+        res.status(404).send("Failed in receive results");
       });
-    })
-  }, // Create garage by address & price
-  updateAddress(req, res) {
-    geocoder.geocode(req.body.Address)
-    .then(address => {
+  }, // Get all garages by zip code
+  createGarage(req, res) {
+    geocoder.geocode(req.body.Address).then(address => {
       models.Garages
-      .update(
-        {
+        .create({
           Address: req.body.Address,
           Renting_Price: req.body.Renting_Price,
           Size: req.body.Size,
           Zip: address[0].zipcode
-        },
-        {
-          where: {
-            id: req.params.id
+        })
+        .then(garage => {
+          res.json(garage).send("Create successfully");
+        })
+        .catch(() => {
+          res.status(404).send("Can't create garage");
+        });
+    });
+  }, // Create garage by address & price
+  updateAddress(req, res) {
+    geocoder.geocode(req.body.Address).then(address => {
+      models.Garages
+        .update(
+          {
+            Address: req.body.Address,
+            Renting_Price: req.body.Renting_Price,
+            Size: req.body.Size,
+            Zip: address[0].zipcode
+          },
+          {
+            where: {
+              id: req.params.id
+            }
           }
-        }
-      ).then(garage => {
-        res.json(garage).send("Update successfully");
-      })
-      .catch(() => {
-        res.status(404).send("Can't update garage");
-      });
-    })
+        )
+        .then(garage => {
+          res.json(garage).send("Update successfully");
+        })
+        .catch(() => {
+          res.status(404).send("Can't update garage");
+        });
+    });
   }, // Update only address of the garage
   deleteGarage(req, res) {
     models.Garages
       .findById(parseInt(req.params.id))
       .then(garage => {
-        models.Garages
-          .destroy({
-            where: {
-              id: garage.id
-            }
-          })
+        models.Garages.destroy({
+          where: {
+            id: garage.id
+          }
+        });
       })
       .then(() => {
         res.redirect("/garages").send("Redirect successfully");
