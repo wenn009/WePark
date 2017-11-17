@@ -11,12 +11,14 @@ import AppRoute from './AppRoute';
 import { BrowserRouter, Route } from 'react-router-dom';
 import NavBar from './NavBar';
 import GarageListContainer from './garageList';
+import GarageSchedule from './Garages/garageSchedule';
 
 ReactDOM.render(
     <BrowserRouter>
         <div>
             <Route exact path='/' component={App} />
             <Route exact path='/list' component={GarageListContainer} />
+            <Route path='/garage/:number' component={GarageSchedule} />
         </div>
     </BrowserRouter>, 
     document.getElementById('root')
