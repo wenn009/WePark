@@ -20,5 +20,6 @@
         "database":"we_park_production",
         "host":"127.0.0.1",
         "dialect":"postgresql"
-    }
+    },
+    "jwtSecret": "new york experience !!"
 }  

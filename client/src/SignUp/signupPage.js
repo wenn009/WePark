@@ -48,6 +48,8 @@ class SignupPage extends React.Component {
             errors.email = 'please enter an email';
         }
         this.setState({errors});
+
+        fetch()
         //TO DO Post sign up data.
         console.log(this.state.user);
     }
