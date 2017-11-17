@@ -31,7 +31,36 @@ class LoginPage extends React.Component {
 
         //TO DO Post login data.
         console.log(email);
-        
+        fetch('http://localhost:8000/auth/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        }).then(response => {
+            if (response.status === 200) {
+                this.setState({ errors: {} });
+                console.log('logged in!!')
+
+                response.json().then(json => {
+                    console.log(json);
+                    Auth.authenticateUser(json.token, email);
+                })
+            } else {
+                console.log('Login failed');
+                response.json().then(json => {
+                    const errors = json.errors ? json.errors : {};
+                    errors.summary = json.message;
+                    this.setState({ errors });
+                });
+            }
+
+        })
+
     }
 
     changeUser(event) {

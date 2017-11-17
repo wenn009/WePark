@@ -6,6 +6,7 @@ import Login from './logIn/loginPage';
 import Signup from './SignUp/signupPage';
 import GarageListContainer from './garageList';
 import GarageSchedule from './Garages/garageSchedule';
+import Logout from './LogOut/LogOutPage';
 
 import {
   BrowserRouter as Router,
@@ -25,9 +26,11 @@ export default () => (
       <Route path='/login' exact component={Login} />
       <Route path='/signup' exact component={Signup} />
       <Route path='/garage/:number' component={GarageSchedule} />
+      <Route path ='/logout' component={Logout} />
     </Switch>
   </Router>
 )
+
 /*const Routes = () => (
   <Router>
     <div>

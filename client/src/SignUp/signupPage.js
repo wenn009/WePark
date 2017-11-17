@@ -30,7 +30,7 @@ class SignupPage extends React.Component {
     // Pre-submission.
     processForm(event) {
         event.preventDefault();
-        const errors = { };
+        const errors = {};
         const email = this.state.user.email;
         const password = this.state.user.password;
         const firstName = this.state.user.firstName;
@@ -40,16 +40,47 @@ class SignupPage extends React.Component {
         const phoneNumber = this.state.user.phoneNumber;
         const retypePassword = this.state.user.retypePassword;
 
-        if(password !== retypePassword){
-            errors.password ='password is not match';
+        if (password !== retypePassword) {
+            errors.password = 'password is not match';
         }
 
-        if(email === ''){
+        if (email === '') {
             errors.email = 'please enter an email';
         }
-        this.setState({errors});
+        this.setState({ errors });
 
-        fetch()
+        //if (this.state.errors === {}) {
+        fetch('http://localhost:8000/auth/signup', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                address: address,
+                userType: userType,
+                phoneNumber: phoneNumber,
+            })
+
+        }).then(response => {
+            if (response.status === 200) {
+                this.setState({ errors: {} });
+                console.log("signed up!!!")
+            } else {
+                response.json().then(json => {
+                    console.log(json);
+                    const errors = json.errors ? json.errors : {};
+                    errors.summary = json.message;
+                    this.setState({ errors });
+                });
+            }
+        })
+        // }
+
         //TO DO Post sign up data.
         console.log(this.state.user);
     }

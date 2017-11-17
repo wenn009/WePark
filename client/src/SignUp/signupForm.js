@@ -82,11 +82,11 @@ const SignupForm = ({
                         </div>
 
                         <div className="row ">
-                            <input type="submit" className="btn btn-md btn-primary pull-right btn-signin" value='Log in' />
+                            <input type="submit" className="btn btn-md btn-primary pull-right btn-signin" value='Sign Up' />
                         </div>
                         <br />
                         <div className="row">
-                            <p className=" pull-right"> New to WePark?  <a href="/signup">Sign Up</a></p>
+                            <p className=" pull-right"> Already have an account  <a href="/login">Log In</a></p>
                         </div>
 
                     </form>
