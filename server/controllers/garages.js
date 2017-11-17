@@ -84,7 +84,7 @@ const GaragesController = {
           Address: req.body.Address,
           Renting_Price: req.body.Renting_Price,
           Size: req.body.Size,
-          Zip: address[0].zipcode
+          Zip: (req.body.Zip === "") ? address[0].zipcode : req.body.Zip
         })
         .then(garage => {
           res.json(garage).send("Create successfully");
@@ -102,7 +102,7 @@ const GaragesController = {
             Address: req.body.Address,
             Renting_Price: req.body.Renting_Price,
             Size: req.body.Size,
-            Zip: address[0].zipcode
+            Zip: (req.body.Zip === "") ? address[0].zipcode : req.body.Zip
           },
           {
             where: {
