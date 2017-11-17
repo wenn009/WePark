@@ -56,13 +56,52 @@ class GarageData extends Component {
     }
 }
 
+class TimeSlot extends Component {
+    render() {
+        return (
+            <p>
+                Start: { this.props.time.StartTime } <br />
+                End: { this.props.time.EndTime }
+            </p>
+        );
+    }
+}
+
 class GarageSchedule extends Component {
+    constructor() {
+        super();
+        this.state = {
+            timeSlots: [],
+        }
+        this.getTimeSlots = this.getTimeSlots.bind(this);
+    }
+
+    componentWillMount() {
+        this.getTimeSlots();
+    }
+
+    getTimeSlots() {
+        fetch('http://localhost:8000/timesheet/1/')
+            .then( response => {
+                return response.json();
+            })
+            .then( jsonBody => {
+                jsonBody.timeSlots.map( (timeSlot) => <TimeSlot time={timeSlot} />);
+                this.setState({
+                    timeSlots: jsonBody.timeSlots.map( (timeSlot) => <TimeSlot time={timeSlot} />),
+                });
+            })
+            .catch( () => {
+                console.log("Error getting time slots");
+            })
+    }
+
     render() {
         return(
             <div className="panel panel-default">
                 <div className="panel-body">
                     <h3>Schedule List</h3>
-                    <h5>The availability will show here</h5>
+                    { this.state.timeSlots }
                 </div>
             </div>
         );
