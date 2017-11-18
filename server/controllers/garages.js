@@ -4,18 +4,32 @@ const NodeGeocoder = require("node-geocoder");
 const geolib = require("geolib");
 const multer = require("multer");
 const sequelize = require("sequelize");
+var upload = multer({ dest: './uploads/' })
+const AWS = require("aws-sdk");
 
-// Where to store photos
-var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "Images/");
-  },
-  filename: function(req, file, cb) {
-    cb(null, Date.now() + ".jpg");
-  }
-});
+// AWS S3 access
+const BUCKET_NAME = "garage-image-bucket";
+const IAM_USER_KEY = "AKIAIW72UZAFRRPBSZTA";
+const IAM_USER_SECRET = "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";
 
-const upload = multer({ storage: storage });
+// Initiate s3 bucket
+function uploadToS3(file) {
+  // s3bucket.createBucket(function() {
+  //   var params = {
+  //     Bucket: BUCKET_NAME,
+  //     Key: file.name,
+  //     Body: file.data
+  //   };
+  //   s3bucket.upload(params, function(err, data) {
+  //     if (err) {
+  //       console.log("error in callback");
+  //       console.log(err);
+  //     }
+  //     console.log("success");
+  //     console.log(data);
+  //   });
+  // });
+}
 
 let options = {
   provider: "google",
@@ -99,28 +113,48 @@ const GaragesController = {
       });
   }, // Get all garages by zip code
   addImage(req, res) {
-    console.log(req.file.path);
-    models.Garages
-      .update(
-        {
-          Photos: sequelize.fn(
-            "array_append",
-            sequelize.col("Photos"),
-            req.file.path
-          )
-        },
-        {
-          where: {
-            id: req.params.id
-          }
-        }
-      )
-      .then(garage => {
-        res.json(garage).send("Image added to this garage");
-      })
-      .catch(() => {
-        res.status(404).send("Failed to add an image");
-      });
+    let s3bucket = new AWS.S3({
+      accessKeyId: IAM_USER_KEY,
+      secretAccessKey: IAM_USER_SECRET,
+      Bucket: BUCKET_NAME
+    });
+
+
+    // let data = {Key: 'imageName', Body: imageFile};
+    s3bucket.putObject({Key: req.file.originalname, Body: req.file}, (err, data) => {
+      if(err) {
+        console.log("Error uploading data: ", data);
+      } else {
+        console.log("Successfully uploaded the image");
+      }
+    });
+  
+    var urlParams = {Bucket: 'myBucket', Key: 'imageName'};
+    s3Bucket.getSignedUrl('getObject', urlParams, function(err, url){
+      console.log('the url of the image is', url);
+    })
+    // uploadToS3(req.files);
+    // models.Garages
+    //   .update(
+    //     {
+    //       Photos: sequelize.fn(
+    //         "array_append",
+    //         sequelize.col("Photos"),
+    //         req.file.path
+    //       )
+    //     },
+    //     {
+    //       where: {
+    //         id: req.params.id
+    //       }
+    //     }
+    //   )
+    //   .then(garage => {
+    //     res.json(garage).send("Image added to this garage");
+    //   })
+    //   .catch(() => {
+    //     res.status(404).send("Failed to add an image");
+    //   });
   },
   getImages(req, res) {
     models.Garages
