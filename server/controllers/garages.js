@@ -7,10 +7,6 @@ const sequelize = require("sequelize");
 var upload = multer({ dest: './uploads/' })
 const AWS = require("aws-sdk");
 
-// AWS S3 access
-const BUCKET_NAME = "garage-image-bucket";
-const IAM_USER_KEY = "AKIAIW72UZAFRRPBSZTA";
-const IAM_USER_SECRET = "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";
 
 // Initiate s3 bucket
 function uploadToS3(file) {
