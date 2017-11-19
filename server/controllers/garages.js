@@ -2,31 +2,15 @@ const express = require("express");
 const models = require("../models");
 const NodeGeocoder = require("node-geocoder");
 const geolib = require("geolib");
-const multer = require("multer");
 const sequelize = require("sequelize");
-var upload = multer({ dest: './uploads/' })
 const AWS = require("aws-sdk");
 
+// AWS S3 access
+const BUCKET_NAME = "garage-image-bucket";
+const IAM_USER_KEY = "AKIAIW72UZAFRRPBSZTA";
+const IAM_USER_SECRET = "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";
 
-// Initiate s3 bucket
-function uploadToS3(file) {
-  // s3bucket.createBucket(function() {
-  //   var params = {
-  //     Bucket: BUCKET_NAME,
-  //     Key: file.name,
-  //     Body: file.data
-  //   };
-  //   s3bucket.upload(params, function(err, data) {
-  //     if (err) {
-  //       console.log("error in callback");
-  //       console.log(err);
-  //     }
-  //     console.log("success");
-  //     console.log(data);
-  //   });
-  // });
-}
-
+// GEOCODER API KEY
 let options = {
   provider: "google",
 
@@ -38,6 +22,7 @@ let options = {
 
 let geocoder = NodeGeocoder(options); // Initialize geocoder
 
+// GARAGE CONTROLLER
 const GaragesController = {
   registerRouter() {
     const router = express.Router();
@@ -49,7 +34,7 @@ const GaragesController = {
     router.get("/:id/photos", this.getImages);
     router.post(
       "/:id/photos/upload",
-      upload.single("garageImages"),
+      // upload.single("garageImages"),
       this.addImage
     );
     router.put("/:id", this.updateAddress);
@@ -115,9 +100,25 @@ const GaragesController = {
       Bucket: BUCKET_NAME
     });
 
+    // Create a new Busboy
+    let bosboy = new Busboy({ headers: req.headers });
+
+    let file = req.headers.images;
+    console.log("file: " + file);
+
+    // busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+    //   console.log('File [' + fieldname + '] got ' + data.length + ' byte');
+    //   file.on('data', data => {
+    //     console.log('File [' + fieldname + ' ] got ' + data.length + ' byte');
+    //   });
+    //   file.on('end', function() {
+    //     console.log('File [' + fieldname + '] Finished');
+    //   });
+    // });
+
 
     // let data = {Key: 'imageName', Body: imageFile};
-    s3bucket.putObject({Key: req.file.originalname, Body: req.file}, (err, data) => {
+    s3bucket.putObject({Key: file, Body: file}, (err, data) => {
       if(err) {
         console.log("Error uploading data: ", data);
       } else {
