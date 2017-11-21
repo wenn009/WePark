@@ -34,7 +34,6 @@ const GaragesController = {
     router.get("/:id/photos", this.getImages);
     router.post(
       "/:id/photos/upload",
-      // upload.single("garageImages"),
       this.addImage
     );
     router.put("/:id", this.updateAddress);
