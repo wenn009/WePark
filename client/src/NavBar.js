@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Auth from './Auth/Auth';
+import './NavBar.css';
 import {
     BrowserRouter as Router,
     Route,
@@ -31,52 +32,75 @@ class NavBar extends Component {
 
     render() {
         return (
-            <nav className="navbar navbar-default">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
-                        <div className="navbar-brand" ><Link to='/'>WePark</Link></div>
-                    </div>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+                <a className="navbar-brand" ><Link to='/'>WePark</Link></a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
 
-                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <form className="navbar-form navbar-left" onSubmit={this.props.searchZip}>
-                            <div className="form-group">
-                                <input type="text" className="form-control" ref="zip" placeholder="Search" onChange={this.props.handleChange}/>
-                            </div>
-                            {/*<button type="submit" className="btn btn-default">Submit</button>*/}
-                        </form>
-                        <ul className="nav navbar-nav">
-                            <li className="nav-item">
-                                <a className="nav-link" href="/list">List</a>
-                            </li>
-                        </ul>
-                        <ul className="nav navbar-nav navbar-right">
+                <div className="collapse navbar-collapse" id="navbarColor01">
+                    <form className="form-inline my-2 my-lg-0" onSubmit={this.props.searchZip}>
+                        <input className="form-control mr-sm-2" ref="zip" placeholder="Search" type="text" onChange={this.props.handleChange} />
+                        {/*<button type="submit" className="btn btn-default">Submit</button>*/}
+                    </form>
+                    <ul className="navbar-nav mr-auto ul-item">
+                        <li className="nav-item li-item">
+                            <a className="nav-link" href="/list">List</a>
+                        </li>
+                        <li className="nav-item li-item">
                             {Auth.isUserAuthenticated() ?
                                 (
-                                    <li className="dropdown">{Auth.getEmail()}</li>
+                                    <a className="nav-link"><Link to="/profile">{Auth.getEmail()}</Link></a>
                                 ) :
                                 (
-                                    <li className="dropdown"><Link to="/login">Log in</Link></li>
+                                    <a className="nav-link"><Link to="/login">Log In</Link></a>
                                 )}
+                        </li>
+                        <li className="nav-item li-item">
                             {Auth.isUserAuthenticated() ?
                                 (
-                                    <li className="dropdown"><Link to="/logout">Log out</Link></li>
+                                    <a className="nav-link"><Link to="/logout">Log Out</Link></a>
                                 ) :
                                 (
-                                    <li className="dropdown"><Link to="/signup">Sign up</Link></li>
+                                    <a className="nav-link"><Link to="/signup">Sign Up</Link></a>
                                 )}
+                        </li>
+                    </ul>
 
-
-                        </ul>
-                    </div>
                 </div>
-            </nav>
+            </nav >
         );
+        /*return (
+            <div>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a className="navbar-brand" href="#">Navbar</a>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+          
+            <div className="collapse navbar-collapse" id="navbarColor01">
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item active">
+                  <a className="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">Features</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">Pricing</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">About</a>
+                </li>
+              </ul>
+              <form className="form-inline my-2 my-lg-0">
+                <input className="form-control mr-sm-2" placeholder="Search" type="text"/>
+                <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+          </nav>
+          </div>
+        );*/
     }
 }
 
@@ -84,5 +108,15 @@ export default NavBar;
 //<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span className="caret"></span></a>
 //<AccountActions links={this.state.accountLinks} />
 /* 
+<div className="container-fluid">
+                    <div className="navbar-header">
+                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                        </button>
+                       
+                    </div>
 */
 
