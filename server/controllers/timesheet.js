@@ -5,15 +5,16 @@ const TimeSheetController = {
   registerRouter() {
     const router = express.Router();
 
-    router.get("/:id", this.index); // Fetch particular timesheet
-    router.post("/", this.createTimeSheet); // Create a time sheet
+    router.get("/:id", this.getOne); // Fetch particular timesheet
+    router.post("/:garageId", this.createTimeSheet); // Create a time sheet
     router.post("/:id/timeSlots", this.scheduleTimeSlot); // Create new time slot under a timesheet
     router.put("/:id/timeSlots/:timeSlotid", this.updateTimeSlot); // Update a time slot under a time sheet
     router.delete("/:id/timeSlots/:timeSlotid", this.deleteTimeSlot); // Delete a particular time slot by id
+    router.delete("/:timeSheetId", this.deleteTimeSheet); // Delete a particular time sheet
 
     return router;
   },
-  index(req, res) {
+  getOne(req, res) {
     models.timeSheet
       .findById(req.params.id, {
         include: [
@@ -30,8 +31,12 @@ const TimeSheetController = {
       });
   },
   createTimeSheet(req, res) {
-    models.timeSheet
-      .create({})
+    models.Garages.findById(parseInt(req.params.garageId))
+    .then(garage => {
+      models.timeSheet
+      .create({
+        GarageId: garage.id
+      })
       .then(timeSheet => {
         res.json(timeSheet).send("Create timessheet successfully");
       })
@@ -39,6 +44,7 @@ const TimeSheetController = {
         console.log(err);
         res.status(404).send("Can't create timesheet");
       });
+    })
   },
   scheduleTimeSlot(req, res) {
     models.timeSheet.findById(req.params.id).then(timeSheet => {
@@ -94,6 +100,19 @@ const TimeSheetController = {
           res.status(404);
         });
     });
+  },
+  deleteTimeSheet(req, res) {
+    models.timeSheet.destroy({
+      where: {
+        id: req.params.timeSheetId
+      }
+    })
+    .then(() => {
+      res.send("Delete successfully");
+    })
+    .catch(() => {
+      res.status(404);
+    })
   }
 };
 
