@@ -33,7 +33,7 @@ class NavBar extends Component {
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a className="navbar-brand" ><Link to='/'>WePark</Link></a>
+                <div className="navbar-brand" ><Link to='/'>WePark</Link></div>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -45,24 +45,24 @@ class NavBar extends Component {
                     </form>
                     <ul className="navbar-nav mr-auto ul-item">
                         <li className="nav-item li-item">
-                            <a className="nav-link" href="/list">List</a>
+                            <div className="nav-link" href="/list">List</div>
                         </li>
                         <li className="nav-item li-item">
                             {Auth.isUserAuthenticated() ?
                                 (
-                                    <a className="nav-link"><Link to="/profile">{Auth.getEmail()}</Link></a>
+                                    <div className="nav-link"><Link to="/profile">{Auth.getEmail()}</Link></div>
                                 ) :
                                 (
-                                    <a className="nav-link"><Link to="/login">Log In</Link></a>
+                                    <div className="nav-link"><Link to="/login">Log In</Link></div>
                                 )}
                         </li>
                         <li className="nav-item li-item">
                             {Auth.isUserAuthenticated() ?
                                 (
-                                    <a className="nav-link"><Link to="/logout">Log Out</Link></a>
+                                    <div className="nav-link"><Link to="/logout">Log Out</Link></div>
                                 ) :
                                 (
-                                    <a className="nav-link"><Link to="/signup">Sign Up</Link></a>
+                                    <div className="nav-link"><Link to="/signup">Sign Up</Link></div>
                                 )}
                         </li>
                     </ul>

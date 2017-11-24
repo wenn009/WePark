@@ -20,7 +20,7 @@ const SignupForm = ({
                         {errors.email && <div className="row"><p className="error-message">{errors.email}</p></div>}
                         <div className="row">
                             <div className="input-group col-md-12 col-sm-12">
-                                <span class="input-group-addon" id="basic-addon1">Email</span>
+                                <span className="input-group-addon" id="basic-addon1">Email</span>
                                 <input className="form-control" id="email" type="email" name="email" onChange={onChange} />
 
                             </div>
@@ -28,7 +28,7 @@ const SignupForm = ({
 
                         <div className="row">
                             <div className="input-group col-md-12 col-md-12">
-                                <span class="input-group-addon" id="basic-addon1">Password</span>
+                                <span className="input-group-addon" id="basic-addon1">Password</span>
                                 <input className="form-control" id="password" type="password" name="password" onChange={onChange} />
 
                             </div>
@@ -36,7 +36,7 @@ const SignupForm = ({
                         {errors.password && <div className="row"><p className="error-message">{errors.password}</p></div>}
                         <div className="row">
                             <div className="input-group col-md-12 col-md-12">
-                                <span class="input-group-addon" id="basic-addon1">Retype Password</span>
+                                <span className="input-group-addon" id="basic-addon1">Retype Password</span>
                                 <input className="form-control" id="retypePassword" type="password" name="retypePassword" onChange={onChange} />
                             </div>
                         </div> <br />
@@ -50,7 +50,7 @@ const SignupForm = ({
 
                         <div className="row">
                             <div className="input-group col-md-12 col-md-12">
-                                <span class="input-group-addon" id="basic-addon1">Last Number</span>
+                                <span className="input-group-addon" id="basic-addon1">Last Name</span>
                                 <input className="form-control" id="lastName" type="lastName" name="lastName" onChange={onChange} />
                             </div>
                         </div> <br />
@@ -64,18 +64,18 @@ const SignupForm = ({
 
                         <div className="row">
                             <div className="input-group col-md-12 col-md-12">
-                                <span class="input-group-addon" id="basic-addon1">Phone Number</span>
+                                <span className="input-group-addon" id="basic-addon1">Phone Number</span>
                                 <input className="form-control" id="phoneNumber" type="telephone" name="phoneNumber" onChange={onChange} />
                             </div>
                         </div> <br />
 
-                        <div class="row">
+                        <div className="row">
                             <div className="input-group col-md-6 col-sm-6">
-                                <div class="radio">
+                                <div className="radio">
                                     <label><input type="radio" name="userType" value="Seller" onChange = {onChange} />Seller</label>
                                 </div>
                             
-                                <div class="radio">
+                                <div className="radio">
                                     <label><input type="radio" name="userType" value="Regular" onChange={onChange} checked/>Regular User</label>
                                 </div>
                             </div>

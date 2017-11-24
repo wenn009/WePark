@@ -50,7 +50,9 @@ class LoginPage extends React.Component {
                 response.json().then(json => {
                     console.log(json);
                     Auth.authenticateUser(json.token, email);
+                    this.forceUpdate();
                 })
+                
 
 
             } else {

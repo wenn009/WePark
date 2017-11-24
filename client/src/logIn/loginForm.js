@@ -20,7 +20,7 @@ const LoginForm = ({
           {errors.summary && <div className="row"><p className="error-message">{errors.summary}</p></div>}
           <div className="row">
             <div className="input-group col-md-12 col-sm-12">
-            <span class="input-group-addon" id="basic-addon1">Email</span>
+            <span className="input-group-addon" id="basic-addon1">Email</span>
               <input className="form-control" id="email" type="email" name="email" onChange={onChange}/>
              
             </div>
@@ -28,7 +28,7 @@ const LoginForm = ({
           {errors.email && <div className="row"><p className="error-message">{errors.email}</p></div>}
           <div className="row">
             <div className="input-group col-md-12 col-md-12">
-            <span class="input-group-addon" id="basic-addon1">Password</span>
+            <span className="input-group-addon" id="basic-addon1">Password</span>
               <input className="form-control" id="password" type="password" name="password" onChange={onChange}/>
               
             </div>
