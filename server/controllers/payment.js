@@ -3,12 +3,12 @@ const models = require("../models");
 const nodemailer = require('nodemailer');
 
 let transporter = nodemailer.createTransport({
-    host: 'sihansolotop@gmail.com',
+    host: '',
     port: 487,
     secure: false,
     auth: {
-        user: 'sihansolotop@gmail.com',
-        pass: '1Lovelike'
+        user: '',
+        pass: ''
     }
 });
 
