@@ -3,12 +3,6 @@ const models = require("../models");
 const NodeGeocoder = require("node-geocoder");
 const geolib = require("geolib");
 const sequelize = require("sequelize");
-const AWS = require("aws-sdk");
-
-// AWS S3 access
-const BUCKET_NAME = "garage-image-bucket";
-const IAM_USER_KEY = "AKIAIW72UZAFRRPBSZTA";
-const IAM_USER_SECRET = "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";
 
 // GEOCODER API KEY
 let options = {
@@ -27,17 +21,17 @@ const GaragesController = {
   registerRouter() {
     const router = express.Router();
 
-    router.get("/", this.index);
-    router.get("/:id", this.getGarage);
+    router.get("/", this.index);  // Fetch all garages
+    router.get("/:id", this.getGarage); // Fetch particular garage
     router.post("/searchResults", this.getSearchResults); // Input zip and return all garages within that zip area
-    router.post("/", this.createGarage);
-    router.get("/:id/photos", this.getImages);
+    router.post("/", this.createGarage);  // Create a new garage
+    router.get("/:id/photos", this.getImages);  // Fetch images
     router.post(
       "/:id/photos/upload",
       this.addImage
-    );
-    router.put("/:id", this.updateAddress);
-    router.delete("/:id", this.deleteGarage);
+    );  // Upload new images
+    router.put("/:id", this.updateGarage); // Update a particular garage
+    router.delete("/:id", this.deleteGarage); // Delete a particular garage
 
     return router;
   },
@@ -105,17 +99,6 @@ const GaragesController = {
     let file = req.headers.images;
     console.log("file: " + file);
 
-    // busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    //   console.log('File [' + fieldname + '] got ' + data.length + ' byte');
-    //   file.on('data', data => {
-    //     console.log('File [' + fieldname + ' ] got ' + data.length + ' byte');
-    //   });
-    //   file.on('end', function() {
-    //     console.log('File [' + fieldname + '] Finished');
-    //   });
-    // });
-
-
     // let data = {Key: 'imageName', Body: imageFile};
     s3bucket.putObject({Key: file, Body: file}, (err, data) => {
       if(err) {
@@ -179,7 +162,7 @@ const GaragesController = {
         });
     });
   }, // Create garage by address & price
-  updateAddress(req, res) {
+  updateGarage(req, res) {
     geocoder.geocode(req.body.Address).then(address => {
       models.Garages
         .update(

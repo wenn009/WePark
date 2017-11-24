@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Garages.associate = (models) => {
         models.Garages.belongsTo(models.Users);
+        models.Garages.hasMany(models.timeSheet);
     }
 
     return Garages;

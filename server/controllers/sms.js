@@ -5,8 +5,8 @@ const AUTHTOKEN = '0063e5a238bdab11be999bd3805422d2';   // Your Auth Token from 
 const client = new twilio(ACCOUNTSID, AUTHTOKEN);
 
 client.messages.create({
-    body: 'Hello from Node',
-    to: '+9176370338',  // Text this number
-    from: '+9176370338' // From a valid Twilio number
+    to: '+6466677792',  // Text this number
+    from: '12017811863', // From a valid Twilio number
+    body: 'Hello, sihan =。='
 })
 .then((message) => console.log(message.sid));
