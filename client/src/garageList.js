@@ -57,8 +57,6 @@ export default class GarageListContainer extends Component {
 
     componentWillMount() {
         this.getUserLocation();
-        //this.getCurrentZip();
-        //this.getAllGarages();
     }
 
     getUserLocation() {
@@ -74,37 +72,30 @@ export default class GarageListContainer extends Component {
     getCurrentZip() {
         const apiKey = 'AIzaSyDpzlkHHmo0OJ-LpHIbogL1eXapd3R1N3o';
         let coordinateKey = this.state.latitude + ',' + this.state.longitude;
-        console.log(coordinateKey);
         const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + coordinateKey + '&key=' + apiKey;
         fetch(url)
             .then( response => {
                 return response.json();
             })
             .then( jsonBody => {
-                let tempArray = jsonBody.results[0].address_components.filter( comp => {
+                let zipArray = jsonBody.results[0].address_components.filter( comp => {
                     if(comp.types.includes('postal_code') === true) {
                         return comp;
                     }
                 });
-                console.log(tempArray);
                 this.setState({
-                    zip: tempArray[0].long_name,
+                    zip: zipArray[0].long_name,
                 });
-                console.log(this.state.zip);
             })
             .then ( () => {
                 this.getAllGarages();
             })
             .catch( () => {
-                console.log(this.state.zip);
                 console.log('Error getting zip code');
             })
     }
 
     getAllGarages() {
-        let form = new FormData();
-        form.append('Zip', this.state.zip);
-        console.log(form.get('Zip'));
         let postData = {
             method: "POST",
             headers: {
@@ -120,7 +111,6 @@ export default class GarageListContainer extends Component {
             return response.json();
         })
         .then( jsonBody => {
-            console.log(jsonBody);
             const garageObjects = jsonBody.map( (garage, index) => <GarageItem garage={garage} key={index} idNumber={garage.id} />);
             this.setState({
                 garages: garageObjects,
