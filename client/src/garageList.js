@@ -46,20 +46,81 @@ export default class GarageListContainer extends Component {
         super();
         this.state = {
             garages: [],
+            longitude: 0,
+            latitude: 0,
+            zip: '',
         }
         this.getAllGarages = this.getAllGarages.bind(this);
+        this.getUserLocation = this.getUserLocation.bind(this);
+        this.getCurrentZip = this.getCurrentZip.bind(this);
     }
 
     componentWillMount() {
-        this.getAllGarages();
+        this.getUserLocation();
+        //this.getCurrentZip();
+        //this.getAllGarages();
+    }
+
+    getUserLocation() {
+        navigator.geolocation.getCurrentPosition( position => {
+            this.setState({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+            });
+            this.getCurrentZip();
+        });
+    }
+
+    getCurrentZip() {
+        const apiKey = 'AIzaSyDpzlkHHmo0OJ-LpHIbogL1eXapd3R1N3o';
+        let coordinateKey = this.state.latitude + ',' + this.state.longitude;
+        console.log(coordinateKey);
+        const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + coordinateKey + '&key=' + apiKey;
+        fetch(url)
+            .then( response => {
+                return response.json();
+            })
+            .then( jsonBody => {
+                let tempArray = jsonBody.results[0].address_components.filter( comp => {
+                    if(comp.types.includes('postal_code') === true) {
+                        return comp;
+                    }
+                });
+                console.log(tempArray);
+                this.setState({
+                    zip: tempArray[0].long_name,
+                });
+                console.log(this.state.zip);
+            })
+            .then ( () => {
+                this.getAllGarages();
+            })
+            .catch( () => {
+                console.log(this.state.zip);
+                console.log('Error getting zip code');
+            })
     }
 
     getAllGarages() {
-        fetch('http://localhost:8000/garages')
+        let form = new FormData();
+        form.append('Zip', this.state.zip);
+        console.log(form.get('Zip'));
+        let postData = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                Zip: this.state.zip
+            })
+        };
+        fetch('http://localhost:8000/garages/searchResults', postData)
         .then( response => {
             return response.json();
         })
         .then( jsonBody => {
+            console.log(jsonBody);
             const garageObjects = jsonBody.map( (garage, index) => <GarageItem garage={garage} key={index} idNumber={garage.id} />);
             this.setState({
                 garages: garageObjects,
