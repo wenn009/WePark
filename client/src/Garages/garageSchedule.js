@@ -35,12 +35,12 @@ class GarageData extends Component {
             <div className="panel panel-default">
                 <div className="panel-body">
                     <div className="row">
-                        <div className="col-xs-12 col-sm-6 col-md-3">
+                        <div className="col-xs-12 col-sm-6 col-md-5">
                             <a href="#" className="thumbnail">
                                 <img src="http://weknowyourdreams.com/images/house/house-04.jpg" className="img-fluid" />
                             </a>
                         </div>
-                        <div className="col-xs-12 col-sm-6 col-md-9">
+                        <div className="col-xs-12 col-sm-6 col-md-7">
                             Address: { this.state.address } <br />
                             Price: { this.state.renting_price } <br />
                             Size: {this.state.size } <br />
