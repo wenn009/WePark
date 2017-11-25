@@ -31,20 +31,30 @@ const TimeSheetController = {
       });
   },
   createTimeSheet(req, res) {
-    models.Garages.findById(parseInt(req.params.garageId))
-    .then(garage => {
+    models.Garages.findById(parseInt(req.params.garageId)).then(garage => {
       models.timeSheet
-      .create({
-        GarageId: garage.id
-      })
-      .then(timeSheet => {
-        res.json(timeSheet).send("Create timessheet successfully");
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(404).send("Can't create timesheet");
-      });
-    })
+        .findOne({
+          where: {
+            GarageId: garage.id
+          }
+        })
+        .then(result => {
+          if (result !== null) {
+            res.send("You already have a timesheet for this garage");
+          }
+        });
+      models.timeSheet
+        .create({
+          GarageId: garage.id
+        })
+        .then(timeSheet => {
+          res.json(timeSheet).send("Create timessheet successfully");
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(404).send("Can't create timesheet");
+        });
+    });
   },
   scheduleTimeSlot(req, res) {
     models.timeSheet.findById(req.params.id).then(timeSheet => {
@@ -102,17 +112,18 @@ const TimeSheetController = {
     });
   },
   deleteTimeSheet(req, res) {
-    models.timeSheet.destroy({
-      where: {
-        id: req.params.timeSheetId
-      }
-    })
-    .then(() => {
-      res.send("Delete successfully");
-    })
-    .catch(() => {
-      res.status(404);
-    })
+    models.timeSheet
+      .destroy({
+        where: {
+          id: req.params.timeSheetId
+        }
+      })
+      .then(() => {
+        res.send("Delete successfully");
+      })
+      .catch(() => {
+        res.status(404);
+      });
   }
 };
 
