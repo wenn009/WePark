@@ -99,7 +99,8 @@ function validateSignupForm(payload){
     errors.password = 'Password mush have at least 8 characters.';
   }
   if(!isFormValid){
-    message = 'The form has errors';
+   message='form error';
+   
   }
   return {
     success: isFormValid,
@@ -118,12 +119,18 @@ function validateLoginForm(payload){
     isFormValid = false;
     errors.email = 'Please provide an email address';
   }
-  if(!payload || typeof payload.password !== 'string' || payload.password.trim().length === 8){
+  if(!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8){
     isFormValid = false;
     errors.password = 'Please provide a password';
   }
   if(!isFormValid){
-    message = 'The form has errors';
+    if(errors.password){
+      message = 'The form has password errors';
+    }else if(errors.email){
+      message = 'The form has email errors';
+    }else{
+      message='The form has some unknow error'
+    }
   }
   return {
     success: isFormValid,

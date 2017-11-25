@@ -43,7 +43,7 @@ const SignupForm = ({
 
                         <div className="row">
                             <div className="input-group col-md-12 col-md-12">
-                                <span class="input-group-addon" id="basic-addon1">First Name</span>
+                                <span className="input-group-addon" id="basic-addon1">First Name</span>
                                 <input className="form-control" id="firstName" type="firstName" name="firstName" onChange={onChange} />
                             </div>
                         </div> <br />
@@ -57,7 +57,7 @@ const SignupForm = ({
 
                         <div className="row">
                             <div className="input-group col-md-12 col-md-12">
-                                <span class="input-group-addon" id="basic-addon1">Address</span>
+                                <span className="input-group-addon" id="basic-addon1">Address</span>
                                 <input className="form-control" id="address" type="address" name="address" onChange={onChange} />
                             </div>
                         </div> <br />

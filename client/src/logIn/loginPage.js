@@ -52,9 +52,7 @@ class LoginPage extends React.Component {
                     Auth.authenticateUser(json.token, email);
                     this.forceUpdate();
                 })
-                
-
-
+            
             } else {
                 console.log('Login failed');
                 response.json().then(json => {
