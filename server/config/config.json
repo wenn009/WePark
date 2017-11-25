@@ -22,4 +22,4 @@
         "dialect":"postgresql"
     },
     "jwtSecret": "new york experience !!"
-}  
+}

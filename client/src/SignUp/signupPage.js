@@ -79,9 +79,7 @@ class SignupPage extends React.Component {
                 });
             }
         })
-        // }
-
-        //TO DO Post sign up data.
+        
         console.log(this.state.user);
     }
 

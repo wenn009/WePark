@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from "react";
 //import Auth from '../Auth/Auth';
 import NavBar from '../NavBar';
 import Auth from '../Auth/Auth';
 import { BrowserRouter as router, Redirect } from 'react-router-dom';
 
-import LoginForm from './loginForm';
+import LoginForm from "./loginForm";
 
 class LoginPage extends React.Component {
     constructor(props, context) {
@@ -94,6 +94,5 @@ class LoginPage extends React.Component {
         }
     }
 }
-
 
 export default LoginPage;

@@ -10,20 +10,25 @@
   "author": "Sihan Alberto Xiaowen",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
+    "aws-sdk": "^2.153.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
+    "connect-multiparty": "^2.1.0",
     "cors": "^2.8.4",
     "express": "^4.16.1",
     "express-session": "^1.15.6",
     "geolib": "^2.0.24",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
     "jest": "^21.2.1",
     "jsonwebtoken": "^8.1.0",
     "node-geocoder": "^3.21.0",
+    "nodemailer": "^4.4.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pg": "^7.3.0",
     "sequelize": "^4.13.0",
     "supertest": "^3.0.0",
+    "twilio": "^3.10.0",
     "validator": "^9.1.1"
   }
 }

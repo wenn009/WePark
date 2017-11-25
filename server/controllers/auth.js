@@ -96,7 +96,7 @@ function validateSignupForm(payload){
   }
   if(!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8){
     isFormValid = false;
-    errors.password = 'Password mush have at least 8 characters.';
+    errors.password = 'Password must have at least 8 characters.';
   }
   if(!isFormValid){
    message='form error';
