@@ -3,18 +3,8 @@ const models = require("../models");
 const NodeGeocoder = require("node-geocoder");
 const geolib = require("geolib");
 const sequelize = require("sequelize");
-
-// GEOCODER API KEY
-let options = {
-  provider: "google",
-
-  // Optional depending on the providers
-  httpAdapter: "https", // Default
-  apiKey: "", // for Mapquest, OpenCage, Google Premier
-  formatter: null // 'gpx', 'string', ...
-};
-
-let geocoder = NodeGeocoder(options); // Initialize geocoder
+const key = require('../config/apiKeys.json')["geocoderKey"];
+const geocoder = NodeGeocoder(key); // Initialize geocoder
 
 // GARAGE CONTROLLER
 const GaragesController = {
@@ -112,28 +102,6 @@ const GaragesController = {
     s3Bucket.getSignedUrl('getObject', urlParams, function(err, url){
       console.log('the url of the image is', url);
     })
-    // uploadToS3(req.files);
-    // models.Garages
-    //   .update(
-    //     {
-    //       Photos: sequelize.fn(
-    //         "array_append",
-    //         sequelize.col("Photos"),
-    //         req.file.path
-    //       )
-    //     },
-    //     {
-    //       where: {
-    //         id: req.params.id
-    //       }
-    //     }
-    //   )
-    //   .then(garage => {
-    //     res.json(garage).send("Image added to this garage");
-    //   })
-    //   .catch(() => {
-    //     res.status(404).send("Failed to add an image");
-    //   });
   },
   getImages(req, res) {
     models.Garages

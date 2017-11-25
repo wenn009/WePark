@@ -8,7 +8,7 @@ const bucketName = "garage-image-bucket"
 const path = require('path')
 const fs = require('fs')
 let pathParams, image, imageName;
-AWS.config.loadFromPath('config.json')
+// AWS.config.loadFromPath('config.json')
 
 
 const s3 = new AWS.S3({region: 'us-east-1'})

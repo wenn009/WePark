@@ -1,44 +1,37 @@
-const express = require('express');
+const express = require("express");
 const models = require("../models");
-const nodemailer = require('nodemailer');
-
-let transporter = nodemailer.createTransport({
-    host: '',
-    port: 487,
-    secure: false,
-    auth: {
-        user: '',
-        pass: ''
-    }
-});
-
+const nodemailer = require("nodemailer");
+const key = require('../config/apiKeys.json')["gmailSMTP"];
+let transporter = nodemailer.createTransport(key);
 
 const PaymentController = {
-    registerRouter() {
-        const router = express.Router();
+  registerRouter() {
+    const router = express.Router();
 
-        // router.get("/", this.getTransactions);
-        // router.get("/:id", this.getDetail);
-        router.post("/", this.sendEmail);
+    // router.get("/", this.getTransactions);
+    // router.get("/:id", this.getDetail);
+    router.post("/", this.sendEmail); // Testing for sending email
 
-        return router;
-    },
-    sendEmail(req, res) {
-        let message = {
-            from: 'sihansolotop@gmail.com',
-            to: 'sihansolotop@gmail.com',
-            subject: 'Anything',
-            text: 'HEHEHE',
-            html: '<p>HTML version of the message</p>'
-        };
+    return router;
+  },
+  sendEmail(req, res) {
+    let msg = {
+      from: 'a1099337011@gmail.com',
+      to: "sihansolotop@gmail.com",
+      subject: "Hello",
+      html: "<b>Hello from Ekko, how are you?</b>"
+    };
 
-        transporter.sendMail(message, (err, info) => {
-            if (err) {
-                return console.log(err);
-            }
-            console.log("Message sent: %s'", info.messageId);
-        })
-    }
-}
+    transporter.sendMail(msg, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+          console.log(info);
+      }
+      console.log("Message sent: %s'", info.messageId);
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    });
+  }
+};
 
 module.exports = PaymentController.registerRouter();
