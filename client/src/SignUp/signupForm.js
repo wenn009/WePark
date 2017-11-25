@@ -62,7 +62,7 @@ const SignupForm = ({
                     </fieldset>
                     
                     <button type="submit" className="btn btn-primary">Submit</button>
-                    <p> Already has an account  <Link to='/login'>Log In</Link></p>
+                    <p> Already has an account?  <Link to='/login'> Log In</Link></p>
                 </fieldset>
             </form>
         </div>
