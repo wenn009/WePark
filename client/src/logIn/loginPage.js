@@ -61,9 +61,9 @@ class LoginPage extends React.Component {
                     const errors = json.errors ? json.errors : {};
                     errors.summary = json.message;
                     this.setState({ errors });
+                    console.log(this.state.errors);
                 });
             }
-
         })
 
     }

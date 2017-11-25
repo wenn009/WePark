@@ -45,7 +45,7 @@ class NavBar extends Component {
                     </form>
                     <ul className="navbar-nav mr-auto ul-item">
                         <li className="nav-item li-item">
-                            <div className="nav-link" href="/list">List</div>
+                            <div className="nav-link"><Link to="/list">List</Link></div>
                         </li>
                         <li className="nav-item li-item">
                             {Auth.isUserAuthenticated() ?
