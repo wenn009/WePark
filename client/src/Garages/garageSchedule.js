@@ -58,8 +58,8 @@ class TimeSlot extends Component {
     render() {
         return (
             <p>
-                Start: { this.props.time.StartTime } <br />
-                End: { this.props.time.EndTime }
+                Start: { this.props.start } <br />
+                End: { this.props.end }
             </p>
         );
     }
@@ -84,9 +84,19 @@ class GarageSchedule extends Component {
                 return response.json();
             })
             .then( jsonBody => {
-                jsonBody.timeSlots.map( (timeSlot) => <TimeSlot time={timeSlot} />);
+                let dates = jsonBody.timeSlots.map( (timeSlot) => {
+                    let starting = new Date(timeSlot.StartTime).toLocaleTimeString();
+                    let ending = new Date(timeSlot.EndTime).toLocaleTimeString();
+                    let dateObject = {
+                        StartTime: starting,
+                        EndTime: ending,
+                    }
+                    console.log(dateObject);
+                    return dateObject;
+                })
+                let timeSlotArray = dates.map( (timeSlot, index) => <TimeSlot start={timeSlot.StartTime} end={timeSlot.EndTime} key={index} />);
                 this.setState({
-                    timeSlots: jsonBody.timeSlots.map( (timeSlot) => <TimeSlot time={timeSlot} />),
+                    timeSlots: timeSlotArray,
                 });
             })
             .catch( () => {
