@@ -3,11 +3,9 @@ import NavBar from './NavBar';
 import './garageListStyles.css';
 
 const EmptyGarageList = (props) => 
-    <div className="panel panel-default garageWidth">
-        <div className="panel-heading">
+    <div className="card border-primary garageWidth">
+        <div className="card-body">
             <h3 className="panel-title">No Garages Near You</h3>
-        </div>
-        <div className="panel-body">
             No garages found!
         </div>
     </div>;

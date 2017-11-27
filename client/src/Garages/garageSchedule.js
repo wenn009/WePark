@@ -32,8 +32,8 @@ class GarageData extends Component {
 
     render() {
         return(
-            <div className="panel panel-default">
-                <div className="panel-body">
+            <div className="card border-primary">
+                <div className="card-body">
                     <div className="row">
                         <div className="col-xs-12 col-sm-6 col-md-5">
                             <a href="#" className="thumbnail">
@@ -96,8 +96,8 @@ class GarageSchedule extends Component {
 
     render() {
         return(
-            <div className="panel panel-default">
-                <div className="panel-body">
+            <div className="card border-primary">
+                <div className="card-body">
                     <h3>Schedule List</h3>
                     { this.state.timeSlots }
                 </div>
