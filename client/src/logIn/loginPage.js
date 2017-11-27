@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from "react";
 //import Auth from '../Auth/Auth';
 import NavBar from '../NavBar';
 import Auth from '../Auth/Auth';
+import { BrowserRouter as router, Redirect } from 'react-router-dom';
 
-import LoginForm from './loginForm';
+import LoginForm from "./loginForm";
 
 class LoginPage extends React.Component {
     constructor(props, context) {
@@ -31,7 +32,38 @@ class LoginPage extends React.Component {
 
         //TO DO Post login data.
         console.log(email);
-        
+        fetch('http://localhost:8000/auth/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        }).then(response => {
+            if (response.status === 200) {
+                this.setState({ errors: {} });
+                console.log('logged in!!')
+
+                response.json().then(json => {
+                    console.log(json);
+                    Auth.authenticateUser(json.token, email);
+                    this.forceUpdate();
+                })
+            
+            } else {
+                console.log('Login failed');
+                response.json().then(json => {
+                    const errors = json.errors ? json.errors : {};
+                    errors.summary = json.message;
+                    this.setState({ errors });
+                    console.log(this.state.errors);
+                });
+            }
+        })
+
     }
 
     changeUser(event) {
@@ -44,19 +76,23 @@ class LoginPage extends React.Component {
 
     render() {
 
-        return (
-            <div>
-                <NavBar />
-                <LoginForm
-                    onSubmit={this.processForm}
-                    onChange={this.changeUser}
-                    errors={this.state.errors}
-                    user={this.state.user}
-                />
-            </div>
-        );
+        if (Auth.isUserAuthenticated()) {
+            return <Redirect to='/' push={true} />
+        } else {
+            return (
+                <div>
+                    <NavBar />
+
+                    <LoginForm
+                        onSubmit={this.processForm}
+                        onChange={this.changeUser}
+                        errors={this.state.errors}
+                        user={this.state.user}
+                    />
+                </div>
+            );
+        }
     }
 }
-
 
 export default LoginPage;

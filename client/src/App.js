@@ -5,9 +5,13 @@ import Map from './Map.js';
 
 class Footer extends Component {
     render() {
-        return(
+        return (
             <footer>
-                WePark Inc.
+                <div className="jumbotron">
+                    <h3 className="display-3">WePark Inc.</h3>
+                    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                    <p><a className="btn btn-primary btn-lg" href="#">Learn more</a></p>
+                </div>
             </footer>
         );
     }
@@ -40,7 +44,7 @@ class App extends Component {
     }
 
     getUserLocation() {
-        navigator.geolocation.getCurrentPosition( position => {
+        navigator.geolocation.getCurrentPosition(position => {
             this.setState({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
@@ -57,17 +61,17 @@ class App extends Component {
 
     getAllGarages() {
         fetch('http://localhost:8000/garages')
-        .then( response => {
-            return response.json();
-        })
-        .then( jsonBody => {
-            this.convertAddressToCoordinates(jsonBody);
-        });
+            .then(response => {
+                return response.json();
+            })
+            .then(jsonBody => {
+                this.convertAddressToCoordinates(jsonBody);
+            });
     }
 
     convertAddressToCoordinates(addresses) {
         let apiKey = 'AIzaSyDpzlkHHmo0OJ-LpHIbogL1eXapd3R1N3o';
-        let convertedAddresses = addresses.map( address => {
+        let convertedAddresses = addresses.map(address => {
             let coordinates = {
                 id: address.id,
                 lat: 0,
@@ -75,31 +79,31 @@ class App extends Component {
             };
             let apiString = address.Address.replace(/ /g, '+');
             fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + apiString + '&key=' + apiKey)
-            .then( response => {
-                return response.json();
-            })
-            .then( jsonBody => {
-                coordinates.lat = jsonBody.results[0].geometry.location.lat;
-                coordinates.lng = jsonBody.results[0].geometry.location.lng;
-                this.setState({
-                    garages: [...this.state.garages, coordinates],
+                .then(response => {
+                    return response.json();
+                })
+                .then(jsonBody => {
+                    coordinates.lat = jsonBody.results[0].geometry.location.lat;
+                    coordinates.lng = jsonBody.results[0].geometry.location.lng;
+                    this.setState({
+                        garages: [...this.state.garages, coordinates],
+                    });
                 });
-            });
         });
     }
 
     searchZip(event) {
         const zip = event.target.value;
-        if(zip.length === 5) {
+        if (zip.length === 5) {
             fetch('http://maps.googleapis.com/maps/api/geocode/json?address=' + zip)
-            .then( response => {
-                return response.json();
-            })
-            .then( jsonBody => {
-                let latitude = jsonBody.results[0].geometry.location.lat;
-                let longitude = jsonBody.results[0].geometry.location.lng;
-                this.setMapOnZipSearch(latitude, longitude);
-            })
+                .then(response => {
+                    return response.json();
+                })
+                .then(jsonBody => {
+                    let latitude = jsonBody.results[0].geometry.location.lat;
+                    let longitude = jsonBody.results[0].geometry.location.lng;
+                    this.setMapOnZipSearch(latitude, longitude);
+                })
         }
         this.setState({
             zipCode: zip,
@@ -109,12 +113,12 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip}/>
+                <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip} />
                 <Map id="testing"
-                    isMarkerShown={true} 
+                    isMarkerShown={true}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `400px`, width: `98.5%`,  margin: `auto` }} />}
+                    containerElement={<div style={{ height: `400px`, width: `98.5%`, margin: `auto` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
                     garages={this.state.garages}
                     latitude={this.state.latitude}
