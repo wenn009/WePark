@@ -107,8 +107,10 @@ export default class GarageListContainer extends Component {
         })
         .then( jsonBody => {
             const garageObjects = jsonBody.map( (garage, index) => <GarageItem garage={garage} key={index} idNumber={garage.id} />);
-            this.setState({
-                garages: garageObjects,
+            this.setState(() => {
+                return {
+                    garages: garageObjects,
+                }
             })
         })
         .catch( () => console.log('Error getting garages'));
