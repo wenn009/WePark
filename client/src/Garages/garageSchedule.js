@@ -139,10 +139,9 @@ class ReserveInput extends Component {
 class TimeSlot extends Component {
     render() {
         return (
-            <p>
-                Start: { this.props.start } <br />
-                End: { this.props.end }
-            </p>
+            <a href="#" className="list-group-item list-group-item-action active">
+                {this.props.start} - {this.props.end}
+            </a>
         );
     }
 }
@@ -202,7 +201,9 @@ class GarageSchedule extends Component {
             <div className="card border-primary">
                 <div className="card-body">
                     <h3>Schedule List</h3>
-                    { this.state.timeSlots }
+                    <div className="list-group">
+                        { this.state.timeSlots }
+                    </div>
                     <button onClick={this.toggleReserve} type="button" className="btn btn-success">{this.state.buttonLabel}</button>
                     { this.state.isModalOpen && <ReserveInput /> }
                 </div>
