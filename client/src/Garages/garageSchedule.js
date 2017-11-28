@@ -54,6 +54,88 @@ class GarageData extends Component {
     }
 }
 
+class TimeModal extends Component {
+    render() {
+        return (
+            <div className="modal">
+                testing
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Reserve Time</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <p>Modal body goes here</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-success">Reserve</button>
+                            <button type="button" className="btn btn-secondary">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class AmPmRadiobuttons extends Component {
+    render() {
+        return (
+            <div className="radio form-check form-check-inline">
+                <label>
+                    <input type="radio" name="AmOrPm" id="value1" value="am"/>
+                    AM
+                </label>
+                <label>
+                    <input type="radio" name="AmOrPm" id="value2" value="pm"/>
+                    PM
+                </label>
+            </div>
+        );
+    }
+}
+
+class TimeSelector extends Component {
+    render() {
+        return (
+            <div className="form-group">
+                <label htmlFor="exampleSelect1">{this.props.label}</label>
+                <select className="form-control" id="exampleSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                </select>
+            </div>
+        );
+    }
+}
+
+class ReserveInput extends Component {
+    render() {
+        return (
+            <form className="form-inline">
+                <TimeSelector label="Start Time: " />
+                <AmPmRadiobuttons />
+                <TimeSelector label="End Time: " />
+                <AmPmRadiobuttons />
+                <button type="button" className="btn btn-success">Submit</button>
+            </form>
+        );
+    }
+}
+
 class TimeSlot extends Component {
     render() {
         return (
@@ -70,12 +152,24 @@ class GarageSchedule extends Component {
         super();
         this.state = {
             timeSlots: [],
+            isModalOpen: false,
+            buttonLabel: 'Reserve Time',
         }
         this.getTimeSlots = this.getTimeSlots.bind(this);
+        this.toggleReserve = this.toggleReserve.bind(this);
     }
 
     componentWillMount() {
         this.getTimeSlots();
+    }
+
+    toggleReserve() {
+        this.setState(() => {
+            return {
+                isModalOpen: !this.state.isModalOpen,
+                buttonLabel: this.state.buttonLabel !== 'Reserve Time' ? 'Reserve Time' : 'Hide',
+            }
+        });
     }
 
     getTimeSlots() {
@@ -91,10 +185,9 @@ class GarageSchedule extends Component {
                         StartTime: starting,
                         EndTime: ending,
                     }
-                    console.log(dateObject);
                     return dateObject;
                 })
-                let timeSlotArray = dates.map( (timeSlot, index) => <TimeSlot start={timeSlot.StartTime} end={timeSlot.EndTime} key={index} />);
+                let timeSlotArray = dates.map( (date, index) => <TimeSlot start={date.StartTime} end={date.EndTime} key={index} />);
                 this.setState({
                     timeSlots: timeSlotArray,
                 });
@@ -110,6 +203,8 @@ class GarageSchedule extends Component {
                 <div className="card-body">
                     <h3>Schedule List</h3>
                     { this.state.timeSlots }
+                    <button onClick={this.toggleReserve} type="button" className="btn btn-success">{this.state.buttonLabel}</button>
+                    { this.state.isModalOpen && <ReserveInput /> }
                 </div>
             </div>
         );
