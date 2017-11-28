@@ -13,11 +13,8 @@ const EmptyGarageList = (props) =>
 class GarageItem extends Component {    
     render() {
         return(
-            <div className="panel panel-default garageWidth">
-                <div className="panel-heading">
-                    <h3 className="panel-title">{ this.props.garage.id }</h3>
-                </div>
-                <div className="panel-body">
+            <div className="card border-primary garageWidth">
+                <div className="card-body">
                     <div className="container">
                         <div className="row">
                             <div className="col-xs-12 col-sm-6 col-md-3">
