@@ -5,11 +5,11 @@ module.exports = (sequelize, DataTypes) => {
         Size: DataTypes.STRING,
         Zip: DataTypes.INTEGER(5),
         Distance: DataTypes.INTEGER,
-        Photos: DataTypes.ARRAY(DataTypes.STRING)
     });
 
     Garages.associate = (models) => {
         models.Garages.belongsTo(models.Users);
+        models.Garages.hasMany(models.Photos);
         models.Garages.hasOne(models.timeSheet);
     }
 

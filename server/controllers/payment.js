@@ -1,19 +1,23 @@
-const express = require('express');
+const express = require("express");
 const models = require("../models");
 const paypal = require("paypal-rest-sdk");
 
-paypal
 
 const PaymentController = {
-    registerRouter() {
-        const router = express.Router();
+  registerRouter() {
+    const router = express.Router();
 
-        // router.get("/", this.getTransactions);
-        // router.get("/:id", this.getDetail);
-        router.post("/", this.sendEmail);
+    router.get("/", this.getTransactions);
+    router.get("/:id", this.getDetail);
 
-        return router;
-    }
-}
+    return router;
+  },
+  getTransactions(req, res) {
+
+  },
+  getDetail(req, res) {
+
+  }
+};
 
 module.exports = PaymentController.registerRouter();
