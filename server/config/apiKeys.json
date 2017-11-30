@@ -15,5 +15,10 @@
       "user": "",
       "pass": ""
     }
+  },
+  "paypalKey": {
+    "mode": "sandbox",
+    "client_id": "",
+    "client_secret": ""
   }
 }
