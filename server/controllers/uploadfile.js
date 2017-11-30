@@ -64,8 +64,6 @@ const UploaderFileController = {
     },
     upload(req, res, next){
         var tmp_path = req.files.file.path;
-        // console.log("item", req.files.file)
-        var tmp_path = req.files.file.path;
         image = fs.createReadStream(tmp_path);
         imageName = req.files.file.name;
         async.series([
