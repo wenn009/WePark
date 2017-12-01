@@ -31,7 +31,7 @@ const LocationController = {
         });
       })
       .then(location => {
-        res.json(location).send("Location returned");
+        res.json(location);
       })
       .catch(() => {
         res.status(404).send("error");

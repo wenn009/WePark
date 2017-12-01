@@ -16,10 +16,10 @@ class GarageData extends Component {
 
     getGarageData() {
         fetch('http://localhost:8000/garages/' + this.props.idNumber)
-            .then(response => {
+            /*.then(response => {
                 return response.json();
-            })
-            .then( jsonBody => {
+            })*/
+            .then(jsonBody => {
                 this.setState({
                     address: jsonBody.Address,
                     renting_price: jsonBody.Renting_Price,
@@ -31,7 +31,7 @@ class GarageData extends Component {
     }
 
     render() {
-        return(
+        return (
             <div className="card border-primary">
                 <div className="card-body">
                     <div className="row">
@@ -41,11 +41,11 @@ class GarageData extends Component {
                             </a>
                         </div>
                         <div className="col-xs-12 col-sm-6 col-md-7">
-                            Address: { this.state.address } <br />
-                            Price: { this.state.renting_price } <br />
-                            Size: {this.state.size } <br />
-                            Posted: { this.state.date } <br />
-                            User: { this.state.user }
+                            Address: {this.state.address} <br />
+                            Price: {this.state.renting_price} <br />
+                            Size: {this.state.size} <br />
+                            Posted: {this.state.date} <br />
+                            User: {this.state.user}
                         </div>
                     </div>
                 </div>
@@ -86,11 +86,11 @@ class AmPmRadiobuttons extends Component {
         return (
             <div className="radio form-check form-check-inline">
                 <label>
-                    <input type="radio" name="AmOrPm" id="value1" value="am"/>
+                    <input type="radio" name="AmOrPm" id="value1" value="am" />
                     AM
                 </label>
                 <label>
-                    <input type="radio" name="AmOrPm" id="value2" value="pm"/>
+                    <input type="radio" name="AmOrPm" id="value2" value="pm" />
                     PM
                 </label>
             </div>
@@ -98,37 +98,47 @@ class AmPmRadiobuttons extends Component {
     }
 }
 
-class TimeSelector extends Component {
+class StartTimeSelector extends Component {
     render() {
         return (
             <div className="form-group">
                 <label htmlFor="exampleSelect1">{this.props.label}</label>
                 <select className="form-control" id="exampleSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
+                
+                        {this.props.startTime.map((time, key) => {
+                            return <option key={key}> {time} </option>;
+                        })
+                        }
+            
                 </select>
             </div>
         );
     }
 }
 
+class EndTimeSelector extends Component {
+    render() {
+        return (
+            <div className="form-group">
+                <label htmlFor="exampleSelect1">{this.props.label}</label>
+                <select className="form-control" id="exampleSelect1">
+                {this.props.endTime.map((time, key) => {
+                    return <option key={key}> {time} </option>;
+                })
+                }
+                </select>
+            </div>
+        )
+    }
+}
+
 class ReserveInput extends Component {
     render() {
         return (
-            <form className="form-inline">
-                <TimeSelector label="Start Time: " />
+            <form className="form-inline" onSubmit={}>
+                <StartTimeSelector label="Start Time: " startTime={this.props.startTime} />
                 <AmPmRadiobuttons />
-                <TimeSelector label="End Time: " />
+                <EndTimeSelector label="End Time: " endTime={this.props.endTime} />
                 <AmPmRadiobuttons />
                 <button type="button" className="btn btn-success">Submit</button>
             </form>
@@ -153,6 +163,8 @@ class GarageSchedule extends Component {
             timeSlots: [],
             isModalOpen: false,
             buttonLabel: 'Reserve Time',
+            startTime: [],
+            endTime: []
         }
         this.getTimeSlots = this.getTimeSlots.bind(this);
         this.toggleReserve = this.toggleReserve.bind(this);
@@ -172,40 +184,62 @@ class GarageSchedule extends Component {
     }
 
     getTimeSlots() {
+        let startTimeArray = [];
+        let endTimeArray = [];
         fetch('http://localhost:8000/timesheet/1/')
-            .then( response => {
+            .then(function (response) {
                 return response.json();
             })
-            .then( jsonBody => {
-                let dates = jsonBody.timeSlots.map( (timeSlot) => {
+            .then(jsonBody => {
+                let dates = jsonBody.timeSlots.map((timeSlot) => {
                     let starting = new Date(timeSlot.StartTime).toLocaleTimeString();
                     let ending = new Date(timeSlot.EndTime).toLocaleTimeString();
+
+                    startTimeArray.push(starting);
+
+                    endTimeArray.push(ending);
+
                     let dateObject = {
                         StartTime: starting,
                         EndTime: ending,
                     }
                     return dateObject;
                 })
-                let timeSlotArray = dates.map( (date, index) => <TimeSlot start={date.StartTime} end={date.EndTime} key={index} />);
+                let timeSlotArray = dates.map((date, index) => <TimeSlot start={date.StartTime} end={date.EndTime} key={index} />);
+                
                 this.setState({
                     timeSlots: timeSlotArray,
+                    startTime: startTimeArray,
+                    endTime: endTimeArray
                 });
+                
             })
-            .catch( () => {
+            .catch(() => {
                 console.log("Error getting time slots");
             })
+        //console.log(startTimeArray);
+        // this.setState({
+        //     startTime: startTimeArray,
+        //     endTime: endTimeArray
+        // })
+        /*this.setState({
+            startTime: [4,5],
+            endTime: [3,5]
+        })
+        console.log(this.state);*/
     }
 
     render() {
-        return(
+        return (
             <div className="card border-primary">
                 <div className="card-body">
                     <h3>Schedule List</h3>
                     <div className="list-group">
-                        { this.state.timeSlots }
+                        {this.state.timeSlots}
                     </div>
+                    
                     <button onClick={this.toggleReserve} type="button" className="btn btn-success">{this.state.buttonLabel}</button>
-                    { this.state.isModalOpen && <ReserveInput /> }
+                    {this.state.isModalOpen && <ReserveInput startTime={this.state.startTime} endTime={this.state.endTime} />}
                 </div>
             </div>
         );
@@ -214,16 +248,17 @@ class GarageSchedule extends Component {
 
 export default class GarageScheduleContainer extends Component {
     render() {
-        return(
+        return (
             <div>
-                <NavBar/>
+                <NavBar />
+                <br />
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 col-sm-12">
                             <GarageSchedule />
                         </div>
                         <div className="col-md-6 col-sm-12">
-                            <GarageData idNumber={ this.props.match.params.number } />
+                            <GarageData idNumber={this.props.match.params.number} />
                         </div>
                     </div>
                 </div>
