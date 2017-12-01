@@ -51,7 +51,13 @@ export default class GarageListContainer extends Component {
     }
     
     componentDidMount() {
-        this.getUserLocation();
+        if (this.props.match.params.zip) {
+            console.log('with zip param');
+            this.getUserLocation();
+        } else {
+            console.log('without zip param');
+            this.getUserLocation();
+        }
     }
 
     getUserLocation() {
@@ -98,7 +104,7 @@ export default class GarageListContainer extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                Zip: this.state.zip
+                Zip: this.props.match.params.zip ? this.props.match.params.zip : this.state.zip
             })
         };
         fetch('http://localhost:8000/garages/searchResults', postData)
