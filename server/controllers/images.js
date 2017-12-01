@@ -8,7 +8,7 @@ const bucketName = "garage-image-bucket"
 const path = require('path')
 const fs = require('fs')
 let pathParams, image, imageName;
-AWS.config.loadFromPath('config.json')
+// AWS.config.loadFromPath('config.json')
 
 
 const s3 = new AWS.S3({region: 'us-east-1'})
@@ -63,8 +63,6 @@ const UploaderFileController = {
         return router;
     },
     upload(req, res, next){
-        var tmp_path = req.files.file.path;
-        // console.log("item", req.files.file)
         var tmp_path = req.files.file.path;
         image = fs.createReadStream(tmp_path);
         imageName = req.files.file.name;

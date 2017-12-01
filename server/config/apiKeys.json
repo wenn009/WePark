@@ -1,0 +1,24 @@
+{
+  "geocoderKey": {
+    "provider": "google", 
+    "httpAdapter": "https",
+    "apiKey": "AIzaSyDDsOGdY2XBMAcCQuUjOUSuHwD_ZZ04WYQ"
+  },
+  "awsKey": {
+    "accessKeyId": "AKIAJJ3HTXUBTNFMAGSA",
+    "secretAccessKey": "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",
+    "region": "us-east-1"
+  },
+  "gmailSMTP": {
+    "service": "gmail",
+    "auth": {
+      "user": "",
+      "pass": ""
+    }
+  },
+  "paypalKey": {
+    "mode": "sandbox",
+    "client_id": "",
+    "client_secret": ""
+  }
+}

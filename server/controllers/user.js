@@ -5,9 +5,9 @@ const UserController = {
   registerRouter() {
     const router = express.Router();
 
-    router.get("/", this.index);
-    router.post("/", this.create);
-    router.get("/:id", this.getUser);
+    router.get("/", this.index);  
+    router.post("/", this.create);  
+    router.get("/:id", this.getUser); 
     router.put("/:id", this.update);
 
     return router;
