@@ -3,11 +3,9 @@ import NavBar from './NavBar';
 import './garageListStyles.css';
 
 const EmptyGarageList = (props) => 
-    <div className="panel panel-default garageWidth">
-        <div className="panel-heading">
+    <div className="card border-primary garageWidth">
+        <div className="card-body">
             <h3 className="panel-title">No Garages Near You</h3>
-        </div>
-        <div className="panel-body">
             No garages found!
         </div>
     </div>;
@@ -15,11 +13,8 @@ const EmptyGarageList = (props) =>
 class GarageItem extends Component {    
     render() {
         return(
-            <div className="panel panel-default garageWidth">
-                <div className="panel-heading">
-                    <h3 className="panel-title">{ this.props.garage.id }</h3>
-                </div>
-                <div className="panel-body">
+            <div className="card border-primary garageWidth">
+                <div className="card-body">
                     <div className="container">
                         <div className="row">
                             <div className="col-xs-12 col-sm-6 col-md-3">
@@ -46,23 +41,76 @@ export default class GarageListContainer extends Component {
         super();
         this.state = {
             garages: [],
+            longitude: 0,
+            latitude: 0,
+            zip: '',
         }
         this.getAllGarages = this.getAllGarages.bind(this);
+        this.getUserLocation = this.getUserLocation.bind(this);
+        this.getCurrentZip = this.getCurrentZip.bind(this);
     }
 
     componentWillMount() {
-        this.getAllGarages();
+        this.getUserLocation();
+    }
+
+    getUserLocation() {
+        navigator.geolocation.getCurrentPosition( position => {
+            this.setState({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+            });
+            this.getCurrentZip();
+        });
+    }
+
+    getCurrentZip() {
+        const apiKey = 'AIzaSyDpzlkHHmo0OJ-LpHIbogL1eXapd3R1N3o';
+        let coordinateKey = this.state.latitude + ',' + this.state.longitude;
+        const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + coordinateKey + '&key=' + apiKey;
+        fetch(url)
+            .then( response => {
+                return response.json();
+            })
+            .then( jsonBody => {
+                let zipArray = jsonBody.results[0].address_components.filter( comp => {
+                    if(comp.types.includes('postal_code') === true) {
+                        return comp;
+                    }
+                });
+                this.setState({
+                    zip: zipArray[0].long_name,
+                });
+            })
+            .then ( () => {
+                this.getAllGarages();
+            })
+            .catch( () => {
+                console.log('Error getting zip code');
+            })
     }
 
     getAllGarages() {
-        fetch('http://localhost:8000/garages')
+        let postData = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                Zip: this.state.zip
+            })
+        };
+        fetch('http://localhost:8000/garages/searchResults', postData)
         .then( response => {
             return response.json();
         })
         .then( jsonBody => {
             const garageObjects = jsonBody.map( (garage, index) => <GarageItem garage={garage} key={index} idNumber={garage.id} />);
-            this.setState({
-                garages: garageObjects,
+            this.setState(() => {
+                return {
+                    garages: garageObjects,
+                }
             })
         })
         .catch( () => console.log('Error getting garages'));
