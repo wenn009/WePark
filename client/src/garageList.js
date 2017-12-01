@@ -49,8 +49,8 @@ export default class GarageListContainer extends Component {
         this.getUserLocation = this.getUserLocation.bind(this);
         this.getCurrentZip = this.getCurrentZip.bind(this);
     }
-
-    componentWillMount() {
+    
+    componentDidMount() {
         this.getUserLocation();
     }
 

@@ -23,10 +23,6 @@ class App extends Component {
         this.getAllGarages();
     }
 
-    componentWillUpdate() {
-        this.getUserLocation();
-    }
-
     constructor() {
         super();
 
