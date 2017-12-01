@@ -5,81 +5,75 @@ import "./GarageForm.css";
 
 const ExampleForm = props => {
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-primary">
-            <div className="panel-heading text-center">Garage Form</div>
-            <div className="panel-body">
-              <Form
-                onSubmit={submittedValues =>
-                  props.valuesOnChange(submittedValues)}
-                // validateError={errorValidator}
-                // validateSuccesss={successValidator}
-                // asyncValidators={asyncValidators}
-              >
-                {formApi => (
-                  <form onSubmit={formApi.submitForm} id="form">
-                    <div className="row">
-                      <label htmlFor="Street address">Street Address</label>
-                      <div className="row">
-                        <Text field={"stAddress"} id="stAddress" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="State">State / Province / Region</label>
-                      <div className="row">
-                        <Text field={"State"} id="State" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="City">City</label>
-                      <div className="row">
-                        <Text field={"City"} id="City" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="Zip">Zip code</label>
-                      <div className="row">
-                        <Text field={"Zip"} id="Zip" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="Renting Price">Renting Price</label>
-                      <div className="row">
-                        <Text field={"RentingPrice"} id="RentingPrice" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="Size">Size</label>
-                      <div className="row">
-                        <Text field={"Size"} id="Size" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <button
-                        type=""
-                        className="mb-4 btn btn-primary"
-                        onClick={onAddImage}
-                      >
-                        Add images
-                      </button>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-push-9">
-                        <button type="submit" className="mb-4 btn btn-primary">
-                          Submit
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                )}
-              </Form>
-            </div>
-          </div>
+    <form>
+      <fieldset>
+        <div className="form-group">
+          <Form
+            onSubmit={submittedValues => props.valuesOnChange(submittedValues)}
+            // validateError={errorValidator}
+            // validateSuccesss={successValidator}
+            // asyncValidators={asyncValidators}
+          >
+            {formApi => (
+              <form onSubmit={formApi.submitForm} id="form">
+                <div className="row">
+                  <label htmlFor="Street address">Street Address</label>
+                  <div className="row">
+                    <Text field={"stAddress"} id="stAddress" />
+                  </div>
+                </div>
+                <div className="row">
+                  <label htmlFor="State">State / Province / Region</label>
+                  <div className="row">
+                    <Text field={"State"} id="State" />
+                  </div>
+                </div>
+                <div className="row">
+                  <label htmlFor="City">City</label>
+                  <div className="row">
+                    <Text field={"City"} id="City" />
+                  </div>
+                </div>
+                <div className="row">
+                  <label htmlFor="Zip">Zip code</label>
+                  <div className="row">
+                    <Text field={"Zip"} id="Zip" />
+                  </div>
+                </div>
+                <div className="row">
+                  <label htmlFor="Renting Price">Renting Price</label>
+                  <div className="row">
+                    <Text field={"RentingPrice"} id="RentingPrice" />
+                  </div>
+                </div>
+                <div className="row">
+                  <label htmlFor="Size">Size</label>
+                  <div className="row">
+                    <Text field={"Size"} id="Size" />
+                  </div>
+                </div>
+                <div className="row">
+                  <button
+                    type=""
+                    className="mb-4 btn btn-primary"
+                    onClick={onAddImage}
+                  >
+                    Add images
+                  </button>
+                </div>
+                <div className="row">
+                  <div className="col-md-push-9">
+                    <button type="submit" className="mb-4 btn btn-primary">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
+          </Form>
         </div>
-      </div>
-    </div>
+      </fieldset>
+    </form>
   );
 };
 

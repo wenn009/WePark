@@ -24,7 +24,7 @@ const TimeSheetController = {
         ]
       })
       .then(timesheet => {
-        res.json(timesheet).send("Received all time slots");
+        res.json(timesheet);
       })
       .catch(() => {
         res.status(404).send("Get timesheet successfully");
@@ -48,7 +48,7 @@ const TimeSheetController = {
           GarageId: garage.id
         })
         .then(timeSheet => {
-          res.json(timeSheet).send("Create timessheet successfully");
+          res.json(timeSheet);
         })
         .catch(err => {
           console.log(err);
@@ -65,7 +65,7 @@ const TimeSheetController = {
           timeSheetId: timeSheet.id
         })
         .then(timeslot => {
-          res.json(timeslot).send("Create successfully");
+          res.json(timeslot);
         })
         .catch(error => {
           console.log(error);
@@ -88,7 +88,7 @@ const TimeSheetController = {
           }
         )
         .then(timeslot => {
-          res.json(timeslot).send("Update Successfully");
+          res.json(timeslot);
         })
         .catch(() => {
           res.status(404);
@@ -104,7 +104,7 @@ const TimeSheetController = {
           }
         })
         .then(timeSlot => {
-          res.json(timeSlot).send("Delete Successfully");
+          res.json(timeSlot);
         })
         .catch(() => {
           res.status(404);
