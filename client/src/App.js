@@ -109,7 +109,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip} />
+                <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip} enteredZip={this.state.zipCode}/>
                 <Map id="testing"
                     isMarkerShown={true}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
