@@ -155,7 +155,9 @@ const GaragesController = {
           Zip: req.body.Zip === "" ? address[0].zipcode : req.body.Zip
         })
         .then(garage => {
-          res.json(garage).send("Create successfully");
+          //res.json(garage).send("Create successfully");
+          //res.json({"post": "success"});
+          res.send("Create suceesfully");
         })
         .catch(() => {
           res.status(404).send("Can't create garage");
