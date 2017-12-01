@@ -1,5 +1,4 @@
 import React, { PropTypes } from "react";
-//import Auth from '../Auth/Auth';
 import NavBar from '../NavBar';
 import Auth from '../Auth/Auth';
 import { BrowserRouter as router, Redirect } from 'react-router-dom';
