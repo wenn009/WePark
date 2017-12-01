@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-//import Auth from '../Auth/Auth';
+import Auth from '../Auth/Auth';
 import NavBar from '../NavBar';
+import { BrowserRouter as router, Redirect } from 'react-router-dom';
 
 import SignupForm from './signupForm';
 
@@ -11,6 +12,7 @@ class SignupPage extends React.Component {
         // set the initial component state
         this.state = {
             errors: {},
+            isSignUp: false,
             user: {
                 email: '',
                 password: '',
@@ -68,7 +70,7 @@ class SignupPage extends React.Component {
 
         }).then(response => {
             if (response.status === 200) {
-                this.setState({ errors: {} });
+                this.setState({ errors: {}, isSignUp: true });
                 console.log("signed up!!!")
             } else {
                 response.json().then(json => {
@@ -92,17 +94,22 @@ class SignupPage extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <NavBar />
-                <SignupForm
-                    onSubmit={this.processForm}
-                    onChange={this.changeUser}
-                    errors={this.state.errors}
-                    user={this.state.user}
-                />
-            </div>
-        );
+        if(this.state.isSignUp){
+            return <Redirect to='/login' push={true} />
+        }else{
+            return (
+                <div>
+                    <NavBar />
+                    <SignupForm
+                        onSubmit={this.processForm}
+                        onChange={this.changeUser}
+                        errors={this.state.errors}
+                        user={this.state.user}
+                    />
+                </div>
+            );
+        }
+        
     }
 }
 

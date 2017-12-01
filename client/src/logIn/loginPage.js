@@ -13,6 +13,7 @@ class LoginPage extends React.Component {
         // set the initial component state
         this.state = {
             errors: {},
+            isLogIn: false,
             user: {
                 email: '',
                 password: ''
@@ -50,7 +51,10 @@ class LoginPage extends React.Component {
                 response.json().then(json => {
                     console.log(json);
                     Auth.authenticateUser(json.token, email);
-                    this.forceUpdate();
+                    //this.forceUpdate();
+                    if(Auth.isUserAuthenticated()){
+                        this.setState({isLogIn: true});
+                    }
                 })
             
             } else {
@@ -76,7 +80,7 @@ class LoginPage extends React.Component {
 
     render() {
 
-        if (Auth.isUserAuthenticated()) {
+        if (this.state.isLogIn) {
             return <Redirect to='/' push={true} />
         } else {
             return (
