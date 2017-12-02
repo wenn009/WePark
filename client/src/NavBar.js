@@ -34,12 +34,7 @@ class NavBar extends Component {
 
     goToListPageWithZip(e) {
         e.preventDefault();
-        console.log('submitted!');
-        let zip = e.target.value;
-        console.log(this.props.enteredZip);
-        //this.props.router.push('/list');
-        //<Link to='/list'/>
-        window.location = '/list/' + this.props.enteredZip;
+        window.location = '/list/' + e.target.zip.value;
     }
 
     render() {
@@ -52,7 +47,7 @@ class NavBar extends Component {
 
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <form className="form-inline my-2 my-lg-0" onSubmit={this.goToListPageWithZip}>
-                        <input className="form-control mr-sm-2" ref="zip" placeholder="Search" type="text" onChange={this.props.handleChange} />
+                        <input className="form-control mr-sm-2" ref="zip" name="zip" placeholder="Search" type="text" onChange={this.props.handleChange} />
                         <button type="submit" className="btn btn-success">Submit</button>
                     </form>
                     <ul className="navbar-nav mr-auto ul-item">

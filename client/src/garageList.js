@@ -53,7 +53,7 @@ export default class GarageListContainer extends Component {
     componentDidMount() {
         if (this.props.match.params.zip) {
             console.log('with zip param');
-            this.getUserLocation();
+            this.getAllGarages();
         } else {
             console.log('without zip param');
             this.getUserLocation();
