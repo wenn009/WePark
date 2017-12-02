@@ -17,6 +17,19 @@ class Footer extends Component {
     }
 }
 
+class Jumbo extends Component {
+    render() {
+        return (
+            <div class="jumbotron">
+                <h1 class="display-3">Jumbotron</h1>
+                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <p><a class="btn btn-primary btn-lg" href="#">Learn more</a></p>
+                <button type="button" className="btn btn-primary" onClick={this.props.handleJumbotron}>Close</button>
+          </div>
+        );
+    }
+}
+
 class App extends Component {
     componentWillMount() {
         this.getUserLocation();
@@ -31,12 +44,14 @@ class App extends Component {
             longitude: 0,
             latitude: 0,
             zipCode: '',
+            showJumbotron: true,
         }
         this.getUserLocation = this.getUserLocation.bind(this);
         this.searchZip = this.searchZip.bind(this);
         this.setMapOnZipSearch = this.setMapOnZipSearch.bind(this);
         this.getAllGarages = this.getAllGarages.bind(this);
         this.convertAddressToCoordinates = this.convertAddressToCoordinates.bind(this);
+        this.closeJumbotron = this.closeJumbotron.bind(this);
     }
 
     getUserLocation() {
@@ -106,10 +121,19 @@ class App extends Component {
         });
     }
 
+    closeJumbotron() {
+        this.setState( () => {
+            return {
+                showJumbotron: false,
+            };
+        });
+    }
+
     render() {
         return (
             <div className="App">
                 <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip} />
+                {this.state.showJumbotron && <Jumbo handleJumbotron={this.closeJumbotron} /> }
                 <Map id="testing"
                     isMarkerShown={true}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
