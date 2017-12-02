@@ -62,10 +62,10 @@ const GaragesController = {
           });
         });
 
-        res.json(garage).send("Result list received");
+        res.json(garage);
       })
       .catch(() => {
-        res.status(404).send("Failed in receive results");
+        res.status(404);
       });
   }, // Get all garages by zip code
   createGarage(req, res) {
@@ -77,8 +77,6 @@ const GaragesController = {
         Zip: req.body.Zip === "" ? address[0].zipcode : req.body.Zip
       })
         .then(garage => {
-          //res.json(garage).send("Create successfully");
-          //res.json({"post": "success"});
           res.send("Create suceesfully");
         })
         .catch(() => {
@@ -102,7 +100,7 @@ const GaragesController = {
         }
       )
         .then(garage => {
-          res.json(garage).send("Update successfully");
+          res.json(garage);
         })
         .catch(() => {
           res.status(404).send("Can't update garage");
