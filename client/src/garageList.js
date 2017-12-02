@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar';
 import './garageListStyles.css';
+import ProgressBar from './ProgressBar';
 
 const EmptyGarageList = (props) => 
     <div className="card border-primary garageWidth">
@@ -44,6 +45,7 @@ export default class GarageListContainer extends Component {
             longitude: 0,
             latitude: 0,
             zip: '',
+            progressBar: 0,
         }
         this.getAllGarages = this.getAllGarages.bind(this);
         this.getUserLocation = this.getUserLocation.bind(this);
@@ -65,6 +67,7 @@ export default class GarageListContainer extends Component {
             this.setState({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
+                progressBar: 25,
             });
             this.getCurrentZip();
         });
@@ -86,6 +89,7 @@ export default class GarageListContainer extends Component {
                 });
                 this.setState({
                     zip: zipArray[0].long_name,
+                    progressBar: 50,
                 });
             })
             .then ( () => {
@@ -93,6 +97,11 @@ export default class GarageListContainer extends Component {
             })
             .catch( () => {
                 console.log('Error getting zip code');
+                this.setState( () => {
+                    return {
+                        progressBar: 100,
+                    }
+                })
             })
     }
 
@@ -116,15 +125,26 @@ export default class GarageListContainer extends Component {
             this.setState(() => {
                 return {
                     garages: garageObjects,
+                    progressBar: 100,
                 }
             })
         })
-        .catch( () => console.log('Error getting garages'));
+        .catch( () => {
+            console.log('Error getting garages');
+            this.setState( () => {
+                return {
+                    progressBar: 100,
+                }
+            })
+        })
     }
 
     render() {
         let garageData = null;
-        if(this.state.garages.length === 0) {
+        if (this.state.progressBar < 100) {
+            let progress = this.state.progressBar + "%"
+            garageData = <ProgressBar status={progress} />
+        } else if(this.state.garages.length === 0) {
             garageData = <EmptyGarageList />
         } else {
             garageData = this.state.garages;

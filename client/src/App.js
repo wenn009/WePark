@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import NavBar from './NavBar.js';
 import Map from './Map.js';
+import ProgressBar from './ProgressBar';
 
 class Footer extends Component {
     render() {
@@ -20,10 +21,10 @@ class Footer extends Component {
 class Jumbo extends Component {
     render() {
         return (
-            <div class="jumbotron">
-                <h1 class="display-3">Jumbotron</h1>
+            <div className="jumbotron">
+                <h1 className="display-3">Jumbotron</h1>
                 <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                <p><a class="btn btn-primary btn-lg" href="#">Learn more</a></p>
+                <p><a className="btn btn-primary btn-lg" href="#">Learn more</a></p>
                 <button type="button" className="btn btn-primary" onClick={this.props.handleJumbotron}>Close</button>
           </div>
         );
@@ -31,7 +32,7 @@ class Jumbo extends Component {
 }
 
 class App extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.getUserLocation();
         this.getAllGarages();
     }
@@ -144,7 +145,7 @@ class App extends Component {
                     latitude={this.state.latitude}
                     longitude={this.state.longitude}
                 />
-                <Footer />
+                {/*<Footer />*/}
             </div>
         );
     }
