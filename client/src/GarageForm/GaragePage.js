@@ -46,7 +46,7 @@ export default class GaragePage extends Component {
 
   // Check if the file input is a image file
   isImage = event => {
-
+    
   };
 
   addImageOnClick = event => {
