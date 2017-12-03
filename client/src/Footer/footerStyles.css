@@ -1,3 +1,7 @@
+.changeColorOnHover {
+    color: white;
+}
+
 .changeColorOnHover:hover {
-    color: red;
+    color: #20c997;
 }

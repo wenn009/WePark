@@ -6,7 +6,7 @@ export default class Footer extends Component {
         const footerStyle = {
             marginTop: "50px",
             backgroundColor: "#2C3E50",
-            color: "#20c997",
+            color: "white",
             padding: "25px",
         }
         return (
