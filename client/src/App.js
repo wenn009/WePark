@@ -3,20 +3,7 @@ import './App.css';
 import NavBar from './NavBar.js';
 import Map from './Map.js';
 import ProgressBar from './ProgressBar';
-
-class Footer extends Component {
-    render() {
-        return (
-            <footer>
-                <div className="jumbotron">
-                    <h3 className="display-3">WePark Inc.</h3>
-                    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                    <p><a className="btn btn-primary btn-lg" href="#">Learn more</a></p>
-                </div>
-            </footer>
-        );
-    }
-}
+import Footer from './Footer/Footer';
 
 class Jumbo extends Component {
     render() {
@@ -145,7 +132,7 @@ class App extends Component {
                     latitude={this.state.latitude}
                     longitude={this.state.longitude}
                 />
-                {/*<Footer />*/}
+                <Footer />
             </div>
         );
     }
