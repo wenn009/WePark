@@ -45,8 +45,8 @@ class GarageItem2 extends Component {
             <div className="card">
                 <h3 className="card-header"></h3>
                 <div className="card-body">
-                    <h5 className="">Username</h5>
-                    <h6 className="card-subtitle text-muted">{ this.props.garage.Renting_Price }</h6>
+                    <h5 className="">Username Here</h5>
+                    <h6 className="card-subtitle text-muted">${ this.props.garage.Renting_Price }</h6>
                 </div>
                 <img style={{height: '200px', width: '100%', display: 'block'}} src="http://weknowyourdreams.com/images/house/house-04.jpg" alt="Card image" />
                 <div className="card-body">
@@ -57,7 +57,7 @@ class GarageItem2 extends Component {
                     <a href={'/garage/'+this.props.idNumber} className="card-link">View</a>
                 </div>
                 <div className="card-footer text-muted">
-                    { this.props.garage.createdAt }
+                    { new Date(this.props.garage.createdAt).toDateString() }
                 </div>
             </div>
             </div>
