@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import './garageListStyles.css';
 import ProgressBar from './ProgressBar';
+import Footer from './Footer/Footer';
 
 const EmptyGarageList = (props) => 
     <div className="card border-primary garageWidth">
@@ -32,6 +33,33 @@ class GarageItem extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
+        );
+    }
+}
+
+class GarageItem2 extends Component {
+    render() {
+        return (
+            <div className="col-lg-4" style={{paddingTop: '10px'}}>
+            <div className="card">
+                <h3 className="card-header"></h3>
+                <div className="card-body">
+                    <h5 className="">Username</h5>
+                    <h6 className="card-subtitle text-muted">{ this.props.garage.Renting_Price }</h6>
+                </div>
+                <img style={{height: '200px', width: '100%', display: 'block'}} src="http://weknowyourdreams.com/images/house/house-04.jpg" alt="Card image" />
+                <div className="card-body">
+                    <p className="card-text">
+                        Address: { this.props.garage.Address } <br />
+                        Size: { this.props.garage.Size }
+                    </p>
+                    <a href={'/garage/'+this.props.idNumber} className="card-link">View</a>
+                </div>
+                <div className="card-footer text-muted">
+                    { this.props.garage.createdAt }
+                </div>
+            </div>
             </div>
         );
     }
@@ -121,7 +149,7 @@ export default class GarageListContainer extends Component {
             return response.json();
         })
         .then( jsonBody => {
-            const garageObjects = jsonBody.map( (garage, index) => <GarageItem garage={garage} key={index} idNumber={garage.id} />);
+            const garageObjects = jsonBody.map( (garage, index) => <GarageItem2 garage={garage} key={index} idNumber={garage.id} />);
             this.setState(() => {
                 return {
                     garages: garageObjects,
@@ -144,6 +172,13 @@ export default class GarageListContainer extends Component {
         if (this.state.progressBar < 100) {
             let progress = this.state.progressBar + "%"
             garageData = <ProgressBar status={progress} />
+            return (
+                <div>
+                    <NavBar />
+                    <ProgressBar status={progress} />
+                    <Footer />
+                </div>
+            );
         } else if(this.state.garages.length === 0) {
             garageData = <EmptyGarageList />
         } else {
@@ -151,9 +186,14 @@ export default class GarageListContainer extends Component {
         }
 
         return(
-            <div id="listPageDiv">
+            <div >
                 <NavBar />
-                { garageData }
+                <div className="container">
+                    <div className="row">
+                        { garageData }
+                    </div>
+                </div>
+                <Footer />
             </div>
         );
     }

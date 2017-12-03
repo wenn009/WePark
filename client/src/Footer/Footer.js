@@ -18,13 +18,13 @@ export default class Footer extends Component {
                 </div>
                 <div className="row">
                     <div className="col-sm-4">
-                        <a href="https://github.com/wenn009/WePark" target="_blank"><i class="fa fa-github fa-5x changeColorOnHover" aria-hidden="true"></i></a>
+                        <a href="https://github.com/wenn009/WePark" target="_blank"><i className="fa fa-github fa-5x changeColorOnHover" aria-hidden="true"></i></a>
                     </div>
                     <div className="col-sm-4">
-                        <a href="#"><i class="fa fa-linkedin-square fa-5x changeColorOnHover" aria-hidden="true"></i></a>
+                        <a href="#"><i className="fa fa-linkedin-square fa-5x changeColorOnHover" aria-hidden="true"></i></a>
                     </div>
                     <div className="col-sm-4">
-                        <a href="#"><i class="fa fa-envelope fa-5x changeColorOnHover" aria-hidden="true"></i></a>
+                        <a href="#"><i className="fa fa-envelope fa-5x changeColorOnHover" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <div className="row">
