@@ -1,5 +1,17 @@
-#form {
+#centerForm {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+}
+
+#form-title {
     text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
+}
+
+#stAddress {
+    margin-bottom: 10px;
+}
+
+#add-image {
+    margin-right: 5px;
 }
