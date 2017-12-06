@@ -7,11 +7,22 @@ import Footer from './Footer/Footer';
 
 class Jumbo extends Component {
     render() {
+        const instructionStyle = {
+            width: "40%",
+            marginLeft: "auto",
+            marginRight: "auto",
+        }
         return (
             <div className="jumbotron">
-                <h1 className="display-3">Jumbotron</h1>
-                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                <p><a className="btn btn-primary btn-lg" href="#">Learn more</a></p>
+                <h1 className="display-3">Welcome to WePark!</h1>
+                <p>Find private parking garages near you</p>
+                <div style={instructionStyle}>
+                    <ul style={{textAlign: "left"}}>
+                        <li>Click on any of the markers on the map to view more info &amp; reserve</li>
+                        <li>Click the 'List' button to view the garages near you in a list format</li>
+                        <li>Input a zip code into the search bar above to view garages in another area</li>
+                    </ul>
+                </div>
                 <button type="button" className="btn btn-primary" onClick={this.props.handleJumbotron}>Close</button>
           </div>
         );
