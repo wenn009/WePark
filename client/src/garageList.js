@@ -176,7 +176,7 @@ export default class GarageListContainer extends Component {
                 <div>
                     <NavBar />
                     <ProgressBar status={progress} />
-                    <Footer />
+                    {/*<Footer />*/}
                 </div>
             );
         } else if(this.state.garages.length === 0) {

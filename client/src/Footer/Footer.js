@@ -8,6 +8,7 @@ export default class Footer extends Component {
             backgroundColor: "#2C3E50",
             color: "white",
             padding: "25px",
+            textAlign: "center",
         }
         return (
             <div className="container-fluid" style={footerStyle}>
