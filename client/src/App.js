@@ -43,7 +43,7 @@ class App extends Component {
             longitude: 0,
             latitude: 0,
             zipCode: '',
-            showJumbotron: true,
+            showJumbotron: sessionStorage.getItem('jumbotron') ? false : true,
         }
         this.getUserLocation = this.getUserLocation.bind(this);
         this.searchZip = this.searchZip.bind(this);
@@ -121,6 +121,7 @@ class App extends Component {
     }
 
     closeJumbotron() {
+        sessionStorage.setItem('jumbotron', true);
         this.setState( () => {
             return {
                 showJumbotron: false,
