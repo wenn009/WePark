@@ -138,7 +138,7 @@ class App extends Component {
                     isMarkerShown={true}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `400px`, width: `98.5%`, margin: `auto` }} />}
+                    containerElement={<div style={{ height: `400px`, width: `98.5%`, margin: `auto`, marginTop: `10px` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
                     garages={this.state.garages}
                     latitude={this.state.latitude}
