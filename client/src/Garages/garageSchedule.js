@@ -135,7 +135,7 @@ class EndTimeSelector extends Component {
 class ReserveInput extends Component {
     render() {
         return (
-            <form className="form-inline" onSubmit={}>
+            <form className="form-inline" >
                 <StartTimeSelector label="Start Time: " startTime={this.props.startTime} />
                 <AmPmRadiobuttons />
                 <EndTimeSelector label="End Time: " endTime={this.props.endTime} />
