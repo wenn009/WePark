@@ -172,7 +172,7 @@ class GarageSchedule extends Component {
     }
 
     getTimeSlots() {
-        fetch('http://localhost:8000/timesheet/1/')
+        fetch('http://localhost:8000/timesheet/5/')
             .then( response => {
                 return response.json();
             })

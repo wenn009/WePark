@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import Navbar from "../NavBar";
 import { GarageForm } from "./GarageForm";
+import {BrowserRouter as router, Redirect } from 'react-router-dom';
 
 export default class GaragePage extends Component {
   constructor() {
     super();
 
     this.state = {
+      isCreated: false,
       garage: {
         stAddress: "",
         apartment: "",
@@ -20,6 +22,7 @@ export default class GaragePage extends Component {
   }
 
   formOnSubmit = event => {
+    event.preventDefault();
     let values = this.state.garage;
     console.log(values);
     fetch("http://localhost:8000/garages/", {
@@ -32,9 +35,12 @@ export default class GaragePage extends Component {
         Address: values.stAddress + " " + values.apartment + " " + values.city + " " + values.state,
         Renting_Price: values.price,
         Size: values.size,
-        Zip: values.Zip
+        Zip: values.zip
       })
     });
+    this.setState({isCreated: true});
+
+    
   };
 
   garageOnChange = event => {
@@ -54,16 +60,19 @@ export default class GaragePage extends Component {
   };
 
   render() {
-    console.log(this.state.garage);
-    return (
-      <div>
-        <Navbar />
-        <GarageForm
-          onChange={this.garageOnChange}
-          formOnSubmit={this.formOnSubmit}
-          addImageOnClick={this.addImageOnClick}
-        />
-      </div>
-    );
+    if(this.state.isCreated){
+      return <Redirect to='/' push={true}/>
+    } else{
+      return (    
+          <div>
+            <Navbar />
+            <GarageForm
+              onChange={this.garageOnChange}
+              formOnSubmit={this.formOnSubmit}
+              addImageOnClick={this.addImageOnClick}
+            />
+          </div>
+        );
+    }
   }
 }
