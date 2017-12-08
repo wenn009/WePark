@@ -5,7 +5,8 @@ import {
     BrowserRouter as Router,
     Route,
     Link,
-    withRouter
+    withRouter,
+    Redirect,
 } from 'react-router-dom'
 
 
@@ -28,6 +29,12 @@ class NavBar extends Component {
             accountLinks: ['Testing', 'Link', 'Prop', 'Here'],
             zip: '',
         }
+        this.goToListPageWithZip = this.goToListPageWithZip.bind(this);
+    }
+
+    goToListPageWithZip(e) {
+        e.preventDefault();
+        window.location = '/list/' + e.target.zip.value;
     }
 
     render() {
@@ -39,9 +46,9 @@ class NavBar extends Component {
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarColor01">
-                    <form className="form-inline my-2 my-lg-0" onSubmit={this.props.searchZip}>
-                        <input className="form-control mr-sm-2" ref="zip" placeholder="Search" type="text" onChange={this.props.handleChange} />
-                        {/*<button type="submit" className="btn btn-default">Submit</button>*/}
+                    <form className="form-inline my-2 my-lg-0" onSubmit={this.goToListPageWithZip}>
+                        <input className="form-control mr-sm-2" ref="zip" name="zip" placeholder="Search" type="text" onChange={this.props.handleChange} />
+                        <button type="submit" className="btn btn-success">Submit</button>
                     </form>
                     <ul className="navbar-nav mr-auto ul-item">
                         <li className="nav-item li-item">

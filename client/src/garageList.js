@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar';
 import './garageListStyles.css';
+import ProgressBar from './ProgressBar';
+import Footer from './Footer/Footer';
 
 const EmptyGarageList = (props) => 
     <div className="card border-primary garageWidth">
@@ -36,6 +38,33 @@ class GarageItem extends Component {
     }
 }
 
+class GarageItem2 extends Component {
+    render() {
+        return (
+            <div className="col-lg-4" style={{paddingTop: '10px'}}>
+            <div className="card">
+                <h3 className="card-header"></h3>
+                <div className="card-body">
+                    <h5 className="">Username Here</h5>
+                    <h6 className="card-subtitle text-muted">${ this.props.garage.Renting_Price }</h6>
+                </div>
+                <img style={{height: '200px', width: '100%', display: 'block'}} src="http://weknowyourdreams.com/images/house/house-04.jpg" alt="Card image" />
+                <div className="card-body">
+                    <p className="card-text">
+                        Address: { this.props.garage.Address } <br />
+                        Size: { this.props.garage.Size }
+                    </p>
+                    <a href={'/garage/'+this.props.idNumber} className="card-link">View</a>
+                </div>
+                <div className="card-footer text-muted">
+                    { new Date(this.props.garage.createdAt).toDateString() }
+                </div>
+            </div>
+            </div>
+        );
+    }
+}
+
 export default class GarageListContainer extends Component {
     constructor() {
         super();
@@ -44,6 +73,7 @@ export default class GarageListContainer extends Component {
             longitude: 0,
             latitude: 0,
             zip: '',
+            progressBar: 0,
         }
         this.getAllGarages = this.getAllGarages.bind(this);
         this.getUserLocation = this.getUserLocation.bind(this);
@@ -51,7 +81,13 @@ export default class GarageListContainer extends Component {
     }
     
     componentDidMount() {
-        this.getUserLocation();
+        if (this.props.match.params.zip) {
+            console.log('with zip param');
+            this.getAllGarages();
+        } else {
+            console.log('without zip param');
+            this.getUserLocation();
+        }
     }
 
     getUserLocation() {
@@ -59,6 +95,7 @@ export default class GarageListContainer extends Component {
             this.setState({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
+                progressBar: 25,
             });
             this.getCurrentZip();
         });
@@ -80,6 +117,7 @@ export default class GarageListContainer extends Component {
                 });
                 this.setState({
                     zip: zipArray[0].long_name,
+                    progressBar: 50,
                 });
             })
             .then ( () => {
@@ -87,6 +125,11 @@ export default class GarageListContainer extends Component {
             })
             .catch( () => {
                 console.log('Error getting zip code');
+                this.setState( () => {
+                    return {
+                        progressBar: 100,
+                    }
+                })
             })
     }
 
@@ -98,7 +141,7 @@ export default class GarageListContainer extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                Zip: this.state.zip
+                Zip: this.props.match.params.zip ? this.props.match.params.zip : this.state.zip
             })
         };
         fetch('http://localhost:8000/garages/searchResults', postData)
@@ -106,28 +149,51 @@ export default class GarageListContainer extends Component {
             return response.json();
         })
         .then( jsonBody => {
-            const garageObjects = jsonBody.map( (garage, index) => <GarageItem garage={garage} key={index} idNumber={garage.id} />);
+            const garageObjects = jsonBody.map( (garage, index) => <GarageItem2 garage={garage} key={index} idNumber={garage.id} />);
             this.setState(() => {
                 return {
                     garages: garageObjects,
+                    progressBar: 100,
                 }
             })
         })
-        .catch( () => console.log('Error getting garages'));
+        .catch( () => {
+            console.log('Error getting garages');
+            this.setState( () => {
+                return {
+                    progressBar: 100,
+                }
+            })
+        })
     }
 
     render() {
         let garageData = null;
-        if(this.state.garages.length === 0) {
+        if (this.state.progressBar < 100) {
+            let progress = this.state.progressBar + "%"
+            garageData = <ProgressBar status={progress} />
+            return (
+                <div>
+                    <NavBar />
+                    <ProgressBar status={progress} />
+                    {/*<Footer />*/}
+                </div>
+            );
+        } else if(this.state.garages.length === 0) {
             garageData = <EmptyGarageList />
         } else {
             garageData = this.state.garages;
         }
 
         return(
-            <div id="listPageDiv">
+            <div >
                 <NavBar />
-                { garageData }
+                <div className="container">
+                    <div className="row">
+                        { garageData }
+                    </div>
+                </div>
+                <Footer />
             </div>
         );
     }

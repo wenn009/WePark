@@ -2,23 +2,35 @@ import React, { Component } from 'react';
 import './App.css';
 import NavBar from './NavBar.js';
 import Map from './Map.js';
+import ProgressBar from './ProgressBar';
+import Footer from './Footer/Footer';
 
-class Footer extends Component {
+class Jumbo extends Component {
     render() {
+        const instructionStyle = {
+            width: "40%",
+            marginLeft: "auto",
+            marginRight: "auto",
+        }
         return (
-            <footer>
-                <div className="jumbotron">
-                    <h3 className="display-3">WePark Inc.</h3>
-                    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                    <p><a className="btn btn-primary btn-lg" href="#">Learn more</a></p>
+            <div className="jumbotron">
+                <h1 className="display-3">Welcome to WePark!</h1>
+                <p>Find private parking garages near you</p>
+                <div style={instructionStyle}>
+                    <ul style={{textAlign: "left"}}>
+                        <li>Click on any of the markers on the map to view more info &amp; reserve</li>
+                        <li>Click the 'List' button to view the garages near you in a list format</li>
+                        <li>Input a zip code into the search bar above to view garages in another area</li>
+                    </ul>
                 </div>
-            </footer>
+                <button type="button" className="btn btn-primary" onClick={this.props.handleJumbotron}>Close</button>
+          </div>
         );
     }
 }
 
 class App extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.getUserLocation();
         this.getAllGarages();
     }
@@ -31,12 +43,14 @@ class App extends Component {
             longitude: 0,
             latitude: 0,
             zipCode: '',
+            showJumbotron: sessionStorage.getItem('jumbotron') ? false : true,
         }
         this.getUserLocation = this.getUserLocation.bind(this);
         this.searchZip = this.searchZip.bind(this);
         this.setMapOnZipSearch = this.setMapOnZipSearch.bind(this);
         this.getAllGarages = this.getAllGarages.bind(this);
         this.convertAddressToCoordinates = this.convertAddressToCoordinates.bind(this);
+        this.closeJumbotron = this.closeJumbotron.bind(this);
     }
 
     getUserLocation() {
@@ -106,15 +120,25 @@ class App extends Component {
         });
     }
 
+    closeJumbotron() {
+        sessionStorage.setItem('jumbotron', true);
+        this.setState( () => {
+            return {
+                showJumbotron: false,
+            };
+        });
+    }
+
     render() {
         return (
             <div className="App">
                 <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip} />
+                {this.state.showJumbotron && <Jumbo handleJumbotron={this.closeJumbotron} /> }
                 <Map id="testing"
                     isMarkerShown={true}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `400px`, width: `98.5%`, margin: `auto` }} />}
+                    containerElement={<div style={{ height: `400px`, width: `98.5%`, margin: `auto`, marginTop: `10px` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
                     garages={this.state.garages}
                     latitude={this.state.latitude}

@@ -25,6 +25,7 @@ export default () => (
     <Switch >
       <Route exact path='/' component={App} />
       <Route exact path='/list' component={GarageListContainer} />
+      <Route path='/list/:zip' component={GarageListContainer} />
       <Route path='/login' exact component={Login} />
       <Route path='/signup' exact component={Signup} />
       <Route path='/createGarage' exact component={GaragePage} />
