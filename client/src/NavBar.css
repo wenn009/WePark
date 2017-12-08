@@ -1,8 +1,7 @@
-.ul-item {
-    margin-left: 600px;
-    padding: 0px;
+#nav-thinner {
+    height: 60px;
 }
 
-.li-item {
-    text-align: right;
+#item-align-left {
+    margin-left: 75%;
 }

@@ -19,7 +19,7 @@ const UserController = {
         if (!allUsers) {
             res.status(404);
         }
-        res.json(allUsers).send("Succeed in geting all users");
+        res.json(allUsers);
       })
       .catch(console.error);
   }, // Return all the users in record
@@ -34,7 +34,7 @@ const UserController = {
         email: req.body.email
       })
       .then(user => {
-        res.json(user).send("Succeed in creating an user");
+        res.json(user);
       })
       .catch(() => {
         res.status(404).send("Failed to create an user");
@@ -44,7 +44,7 @@ const UserController = {
     models.Users
       .findById(parseInt(req.params.id))
       .then(user => {
-        res.json(user).send("Succeed in get an user");
+        res.json(user);
       })
       .catch(() => {
         res.status(404).send("Failed to get that user");
@@ -68,7 +68,7 @@ const UserController = {
         }
       )
       .then(user => {
-        res.json(user).send("Succeed in update user");
+        res.json(user);
       })
       .catch(() => {
         res.status(404).send("Failed to update user");

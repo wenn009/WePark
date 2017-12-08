@@ -1,0 +1,7 @@
+.changeColorOnHover {
+    color: white;
+}
+
+.changeColorOnHover:hover {
+    color: #20c997;
+}

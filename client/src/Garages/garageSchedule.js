@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from '../NavBar';
+import Auth from '../Auth/Auth';
 
 class GarageData extends Component {
     constructor() {
@@ -8,6 +9,7 @@ class GarageData extends Component {
             address: '',
         }
         this.getGarageData = this.getGarageData.bind(this);
+
     }
 
     componentWillMount() {
@@ -29,6 +31,8 @@ class GarageData extends Component {
                 });
             })
     }
+
+
 
     render() {
         return (
@@ -103,13 +107,15 @@ class StartTimeSelector extends Component {
         return (
             <div className="form-group">
                 <label htmlFor="exampleSelect1">{this.props.label}</label>
-                <select className="form-control" id="exampleSelect1">
-                
-                        {this.props.startTime.map((time, key) => {
-                            return <option key={key}> {time} </option>;
-                        })
-                        }
-            
+                <select
+                    className="form-control"
+                    id="exampleSelect1"
+                    name="startTime"
+                    onChange={this.props.onChange}>
+                    {this.props.startTime.map((time, key) => {
+                        return <option key={key} value={time}> {time} </option>;
+                    })
+                    }
                 </select>
             </div>
         );
@@ -121,11 +127,15 @@ class EndTimeSelector extends Component {
         return (
             <div className="form-group">
                 <label htmlFor="exampleSelect1">{this.props.label}</label>
-                <select className="form-control" id="exampleSelect1">
-                {this.props.endTime.map((time, key) => {
-                    return <option key={key}> {time} </option>;
-                })
-                }
+                <select
+                    className="form-control"
+                    id="exampleSelect1"
+                    name="endTime"
+                    onChange={this.props.onChange}>
+                    {this.props.endTime.map((time, key) => {
+                        return <option key={key} value={time} > {time} </option>;
+                    })
+                    }
                 </select>
             </div>
         )
@@ -135,12 +145,16 @@ class EndTimeSelector extends Component {
 class ReserveInput extends Component {
     render() {
         return (
-            <form className="form-inline" >
-                <StartTimeSelector label="Start Time: " startTime={this.props.startTime} />
-                <AmPmRadiobuttons />
-                <EndTimeSelector label="End Time: " endTime={this.props.endTime} />
-                <AmPmRadiobuttons />
-                <button type="button" className="btn btn-success">Submit</button>
+            <form className="form-inline" onSubmit={this.props.onSubmit}>
+                <StartTimeSelector
+                    label="Start Time: "
+                    startTime={this.props.startTime}
+                    onChange={this.props.onChange} />
+                <EndTimeSelector
+                    label="End Time: "
+                    endTime={this.props.endTime}
+                    onChange={this.props.onChange} />
+                <button type="submit" className="btn btn-success">Submit</button>
             </form>
         );
     }
@@ -164,10 +178,17 @@ class GarageSchedule extends Component {
             isModalOpen: false,
             buttonLabel: 'Reserve Time',
             startTime: [],
-            endTime: []
+            endTime: [],
+            reserveInfor:{
+                startTime: '',
+                endTime: '',
+                user: Auth.getEmail()
+            }
         }
         this.getTimeSlots = this.getTimeSlots.bind(this);
         this.toggleReserve = this.toggleReserve.bind(this);
+        this.reserveAGarage = this.reserveAGarage.bind(this);
+        this.selectTime = this.selectTime.bind(this);
     }
 
     componentWillMount() {
@@ -181,6 +202,19 @@ class GarageSchedule extends Component {
                 buttonLabel: this.state.buttonLabel !== 'Reserve Time' ? 'Reserve Time' : 'Hide',
             }
         });
+    }
+    reserveAGarage(event) {
+        event.preventDefault();
+        console.log(this.state.reserveInfor);
+    }
+
+    selectTime(event) {
+        const field = event.target.name;
+        const reserveInfor= this.state.reserveInfor;
+        reserveInfor[field] = event.target.value;
+        this.setState({ reserveInfor });
+        console.log(this.state.reserveInfor);
+
     }
 
     getTimeSlots() {
@@ -196,23 +230,28 @@ class GarageSchedule extends Component {
                     let ending = new Date(timeSlot.EndTime).toLocaleTimeString();
 
                     startTimeArray.push(starting);
-
                     endTimeArray.push(ending);
-
                     let dateObject = {
                         StartTime: starting,
                         EndTime: ending,
                     }
                     return dateObject;
                 })
+
                 let timeSlotArray = dates.map((date, index) => <TimeSlot start={date.StartTime} end={date.EndTime} key={index} />);
-                
+                const startTime = startTimeArray[0];
+                const endTime = endTimeArray[0];
+                const reserveInfor = this.state.reserveInfor;
+                reserveInfor['startTime']=startTime;
+                reserveInfor['endTime']=endTime;
+
                 this.setState({
                     timeSlots: timeSlotArray,
                     startTime: startTimeArray,
-                    endTime: endTimeArray
+                    endTime: endTimeArray,
+                    reserveInfor: reserveInfor
                 });
-                
+
             })
             .catch(() => {
                 console.log("Error getting time slots");
@@ -237,9 +276,14 @@ class GarageSchedule extends Component {
                     <div className="list-group">
                         {this.state.timeSlots}
                     </div>
-                    
+
                     <button onClick={this.toggleReserve} type="button" className="btn btn-success">{this.state.buttonLabel}</button>
-                    {this.state.isModalOpen && <ReserveInput startTime={this.state.startTime} endTime={this.state.endTime} />}
+                    {this.state.isModalOpen &&
+                        <ReserveInput
+                            onSubmit={this.reserveAGarage}
+                            startTime={this.state.startTime}
+                            endTime={this.state.endTime}
+                            onChange={this.selectTime} />}
                 </div>
             </div>
         );

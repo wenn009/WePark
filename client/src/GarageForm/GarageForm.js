@@ -1,163 +1,114 @@
 import React, { Component } from "react";
-import { Form, Text } from "react-form";
-import Navbar from "../NavBar";
 import "./GarageForm.css";
 
-const ExampleForm = props => {
+export const GarageForm = props => {
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-md-12">
-          <div className="panel panel-primary">
-            <div className="panel-heading text-center">Garage Form</div>
-            <div className="panel-body">
-              <Form
-                onSubmit={submittedValues =>
-                  props.valuesOnChange(submittedValues)}
-                // validateError={errorValidator}
-                // validateSuccesss={successValidator}
-                // asyncValidators={asyncValidators}
-              >
-                {formApi => (
-                  <form onSubmit={formApi.submitForm} id="form">
-                    <div className="row">
-                      <label htmlFor="Street address">Street Address</label>
-                      <div className="row">
-                        <Text field={"stAddress"} id="stAddress" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="State">State / Province / Region</label>
-                      <div className="row">
-                        <Text field={"State"} id="State" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="City">City</label>
-                      <div className="row">
-                        <Text field={"City"} id="City" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="Zip">Zip code</label>
-                      <div className="row">
-                        <Text field={"Zip"} id="Zip" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="Renting Price">Renting Price</label>
-                      <div className="row">
-                        <Text field={"RentingPrice"} id="RentingPrice" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <label htmlFor="Size">Size</label>
-                      <div className="row">
-                        <Text field={"Size"} id="Size" />
-                      </div>
-                    </div>
-                    <div className="row">
-                      <button
-                        type=""
-                        className="mb-4 btn btn-primary"
-                        onClick={onAddImage}
-                      >
-                        Add images
-                      </button>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-push-9">
-                        <button type="submit" className="mb-4 btn btn-primary">
-                          Submit
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                )}
-              </Form>
+      <div className="col-md-6" id="centerForm">
+        <form onSubmit={props.formOnSubmit}>
+          <fieldset>
+            <legend id="form-title">Upload New Garage</legend>
+            <div className="form-group">
+              <label htmlFor="name">Full Name</label>
+              <input
+                className="form-control"
+                id="name"
+                aria-describedby="fullName"
+                // onChange={props.onChange}
+              />
             </div>
-          </div>
-        </div>
+
+            <div className="form-group">
+              <label htmlFor="address">Street address</label>
+              <input
+                className="form-control"
+                id="stAddress"
+                aria-describedby="streetAddress"
+                onChange={props.onChange}
+                placeholder="Street and number, P.O box, c/o."
+              />
+              <input
+                className="form-control"
+                id="apartment"
+                aria-describedby="apartment"
+                onChange={props.onChange}
+                placeholder="Apartment, suite, unit, building, floor, etc."
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="city">City</label>
+              <input
+                className="form-control"
+                id="city"
+                onChange={props.onChange}
+                aria-describedby="city"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="state">State / Province / Region</label>
+              <input
+                className="form-control"
+                id="state"
+                onChange={props.onChange}
+                aria-describedby="state"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="zip">Zip code</label>
+              <input
+                className="form-control"
+                id="zip"
+                aria-describedby="zip"
+                onChange={props.onChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="size">Garage Size</label>
+              <input
+                className="form-control"
+                id="size"
+                onChange={props.onChange}
+                aria-describedby="size"
+              />
+            </div>
+
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label className="control-label">Price</label>
+                  <div className="input-group">
+                    <div className="input-group-addon">$</div>
+                    <input
+                      className="form-control"
+                      id="price"
+                      placeholder="Amount"
+                      type="text"
+                      onChange={props.onChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <input
+              className="form-control-file"
+              id="add-image"
+              aria-describedby="fileHelp"
+              type="file"
+            />
+
+            <div className="text-right">
+              <button type="submit" className="btn btn-primary right">
+                Submit
+              </button>
+            </div>
+          </fieldset>
+        </form>
       </div>
     </div>
   );
 };
-
-const onAddImage = () => {
-  console.log("Add image");
-};
-
-const errorValidator = values => {
-  return {
-    Address:
-      !values.Address || values.Address.trim() === ""
-        ? "Address is a required field"
-        : null
-  };
-};
-
-const successValidator = (values, errors) => {
-  return {
-    Address: !errors.Address ? "Awesome! Your address is good to go" : null
-  };
-};
-
-const doesStateExist = Address =>
-  new Promise((resolve, reject) =>
-    setTimeout(() => {
-      // If the Address exist, then return error
-    })
-  );
-
-const asyncValidators = {
-  Address: async Address => {
-    const validations = await doesStateExist(Address);
-    return validations;
-  }
-};
-
-export default class GarageForm extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      submittedValues: {}
-    };
-  }
-
-  valuesOnChange = submittedValues => {
-    this.setState({
-      submittedValues
-    });
-
-    // Save data to database
-    this.saveData();
-  };
-
-  saveData() {
-    let values = this.state.submittedValues;
-    console.log(this.state.submittedValues);
-    fetch("http://localhost:8000/garages/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        Address: values.stAddress + " " + values.City + " " + values.State,
-        Renting_Price: values.RentingPrice,
-        Size: values.Size,
-        Zip: values.Zip
-      })
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <Navbar />
-        <ExampleForm valuesOnChange={this.valuesOnChange} />
-      </div>
-    );
-  }
-}
