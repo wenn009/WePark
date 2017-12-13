@@ -11,9 +11,16 @@ class Jumbo extends Component {
             width: "40%",
             marginLeft: "auto",
             marginRight: "auto",
-        }
+        };
+        const jumboStyle = {
+            position: "absolute",
+            zIndex: "1",
+            width: "100%",
+            marginTop: "55px",
+            opacity: ".75",
+        };
         return (
-            <div className="jumbotron">
+            <div className="jumbotron" style={jumboStyle}>
                 <h1 className="display-3">Welcome to WePark!</h1>
                 <p>Find private parking garages near you</p>
                 <div style={instructionStyle}>
@@ -25,6 +32,23 @@ class Jumbo extends Component {
                 </div>
                 <button type="button" className="btn btn-primary" onClick={this.props.handleJumbotron}>Close</button>
           </div>
+        );
+    }
+}
+
+class MapCenterInput extends Component {
+    render() {
+        return (
+            <div className="container" style={{marginTop: "10px"}}>
+                <div className="row">
+                    <div className="col-md-6 text-right">
+                        <label>Map Center: </label>
+                    </div>
+                    <div className="col-md-3">
+                        <input type="text" className="form-control" onChange={this.props.handleChange}/>
+                    </div>
+                </div>
+            </div>
         );
     }
 }
@@ -134,6 +158,7 @@ class App extends Component {
             <div className="App">
                 <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip} />
                 {this.state.showJumbotron && <Jumbo handleJumbotron={this.closeJumbotron} /> }
+                <MapCenterInput handleChange={this.searchZip} />
                 <Map id="testing"
                     isMarkerShown={true}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
