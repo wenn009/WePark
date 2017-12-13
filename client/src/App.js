@@ -11,9 +11,16 @@ class Jumbo extends Component {
             width: "40%",
             marginLeft: "auto",
             marginRight: "auto",
-        }
+        };
+        const jumboStyle = {
+            position: "absolute",
+            zIndex: "1",
+            width: "100%",
+            marginTop: "10px",
+            opacity: ".75",
+        };
         return (
-            <div className="jumbotron">
+            <div className="jumbotron" style={jumboStyle}>
                 <h1 className="display-3">Welcome to WePark!</h1>
                 <p>Find private parking garages near you</p>
                 <div style={instructionStyle}>
