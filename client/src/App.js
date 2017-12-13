@@ -16,7 +16,7 @@ class Jumbo extends Component {
             position: "absolute",
             zIndex: "1",
             width: "100%",
-            marginTop: "10px",
+            marginTop: "55px",
             opacity: ".75",
         };
         return (
@@ -32,6 +32,23 @@ class Jumbo extends Component {
                 </div>
                 <button type="button" className="btn btn-primary" onClick={this.props.handleJumbotron}>Close</button>
           </div>
+        );
+    }
+}
+
+class MapCenterInput extends Component {
+    render() {
+        return (
+            <div className="container" style={{marginTop: "10px"}}>
+                <div className="row">
+                    <div className="col-md-6 text-right">
+                        <label>Map Center: </label>
+                    </div>
+                    <div className="col-md-3">
+                        <input type="text" className="form-control" />
+                    </div>
+                </div>
+            </div>
         );
     }
 }
@@ -141,6 +158,7 @@ class App extends Component {
             <div className="App">
                 <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip} />
                 {this.state.showJumbotron && <Jumbo handleJumbotron={this.closeJumbotron} /> }
+                <MapCenterInput />
                 <Map id="testing"
                     isMarkerShown={true}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
