@@ -47,7 +47,7 @@ class NavBar extends Component {
 
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <form className="form-inline my-2 my-lg-0" onSubmit={this.goToListPageWithZip}>
-                        <input className="form-control mr-sm-2" ref="zip" name="zip" placeholder="Search" type="text" onChange={this.props.handleChange} />
+                        <input className="form-control mr-sm-2" ref="zip" name="zip" placeholder="Search" type="text" />
                         <button type="submit" className="btn btn-success">Submit</button>
                     </form>
                     <ul className="navbar-nav mr-auto ul-item">

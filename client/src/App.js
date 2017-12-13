@@ -45,7 +45,7 @@ class MapCenterInput extends Component {
                         <label>Map Center: </label>
                     </div>
                     <div className="col-md-3">
-                        <input type="text" className="form-control" />
+                        <input type="text" className="form-control" onChange={this.props.handleChange}/>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@ class App extends Component {
             <div className="App">
                 <NavBar handleZip={this.searchZip} value={this.state.zipCode} handleChange={this.searchZip} />
                 {this.state.showJumbotron && <Jumbo handleJumbotron={this.closeJumbotron} /> }
-                <MapCenterInput />
+                <MapCenterInput handleChange={this.searchZip} />
                 <Map id="testing"
                     isMarkerShown={true}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
