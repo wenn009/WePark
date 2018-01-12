@@ -17,7 +17,7 @@ class Jumbo extends Component {
             zIndex: "1",
             width: "100%",
             marginTop: "55px",
-            opacity: ".7",
+            opacity: ".75",
         };
         return (
             <div className="jumbotron" style={jumboStyle}>
@@ -41,9 +41,11 @@ class MapCenterInput extends Component {
         return (
             <div className="container" style={{marginTop: "10px"}}>
                 <div className="row">
-                    <div className="col-md-9"></div>
+                    <div className="col-md-6 text-right">
+                        <label>Map Center: </label>
+                    </div>
                     <div className="col-md-3">
-                        <input type="text" className="form-control" onChange={this.props.handleChange} placeholder="Search address" />
+                        <input type="text" className="form-control" onChange={this.props.handleChange}/>
                     </div>
                 </div>
             </div>
