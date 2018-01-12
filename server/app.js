@@ -14,6 +14,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true}));
 
+app.use('/', express.static('../client/build'));
+
 const controllers = require('./controllers');
 app.use(controllers);
 
