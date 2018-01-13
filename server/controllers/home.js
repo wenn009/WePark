@@ -15,8 +15,8 @@ const HomeController = {
         // res.json({
         //     msg: temp/*"Successful GET to home router"*/
         // });
-        //res.sendFile(path.join(__dirname+'client/build/index.html'));
-        res.sendFile('app/server/client/build/index.html');
+        res.sendFile(path.join(__dirname+'/client/build/index.html'));
+        //res.sendFile('app/server/client/build/index.html');
     }
 };
 
