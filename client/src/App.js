@@ -94,7 +94,7 @@ class App extends Component {
     }
 
     getAllGarages() {
-        fetch('http://localhost:8000/garages')
+        fetch('/garages')
             .then(response => {
                 return response.json();
             })
