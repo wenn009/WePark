@@ -17,7 +17,7 @@
   "production": {
     "username": "ctp_user",
     "password": "ctp_user",
-    "database": "we_park_production",
+    "database": "we_park_development",
     "host": "127.0.0.1",
     "dialect": "postgresql"
   },
