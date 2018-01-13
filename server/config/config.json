@@ -19,6 +19,7 @@
     "password": "ctp_user",
     "database": "we_park_development",
     "host": "127.0.0.1",
+    "use_env_variable": "DATABASE_URL",
     "dialect": "postgresql"
   },
   "jwtSecret": "new york experience !!"
