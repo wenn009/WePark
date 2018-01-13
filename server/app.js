@@ -7,6 +7,7 @@ const models = require('./models');
 const PORT = process.env.PORT || 8000;
 
 var app = express();
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 //allow cross origin
 app.use(cors());
@@ -14,7 +15,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true}));
 
-app.use('/', express.static('../client/build'));
 const controllers = require('./controllers');
 app.use(controllers);
 
