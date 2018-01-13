@@ -8,6 +8,6 @@ router.use('/payment', require('./payment'));
 router.use('/images', require('./images'));
 router.use('/user', require('./user'));
 router.use('/auth', require('./auth'));
-//router.use('/', require('./home'));
+router.use('/', require('./home'));
 
 module.exports = router;
