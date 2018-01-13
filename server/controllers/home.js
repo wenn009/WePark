@@ -11,12 +11,12 @@ const HomeController = {
         return router;
     },
     index(req, res) {
-        let temp = path.join(__dirname+'/client/build/index.html');
-        // res.json({
-        //     msg: temp/*"Successful GET to home router"*/
-        // });
+        let temp = path.join(__dirname+'client/build/index.html');
+        res.json({
+            msg: temp/*"Successful GET to home router"*/
+        });
         //res.sendFile('/index.html');
-        res.sendFile('app/client/build/index.html');
+        //res.sendFile('app/client/build/index.html');
     }
 };
 
