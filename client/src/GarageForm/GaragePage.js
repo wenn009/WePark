@@ -25,7 +25,7 @@ export default class GaragePage extends Component {
     event.preventDefault();
     let values = this.state.garage;
     console.log(values);
-    fetch("http://localhost:8000/garages/", {
+    fetch("/garages/", {
       method: "POST",
       headers: {
         Accept: "application/json",
