@@ -129,7 +129,7 @@ class App extends Component {
     searchZip(event) {
         const zip = event.target.value;
         if (zip.length === 5) {
-            fetch('http://maps.googleapis.com/maps/api/geocode/json?address=' + zip)
+            fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + zip)
                 .then(response => {
                     return response.json();
                 })
