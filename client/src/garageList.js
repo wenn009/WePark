@@ -144,7 +144,7 @@ export default class GarageListContainer extends Component {
                 Zip: this.props.match.params.zip ? this.props.match.params.zip : this.state.zip
             })
         };
-        fetch('http://localhost:8000/garages/searchResults', postData)
+        fetch('/garages/searchResults', postData)
         .then( response => {
             return response.json();
         })
