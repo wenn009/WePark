@@ -15,7 +15,7 @@ class GarageData extends Component {
     }
 
     getGarageData() {
-        fetch('http://localhost:8000/garages/' + this.props.idNumber)
+        fetch('/garages/' + this.props.idNumber)
             .then(response => {
                 return response.json();
             })
@@ -172,7 +172,7 @@ class GarageSchedule extends Component {
     }
 
     getTimeSlots() {
-        fetch('http://localhost:8000/timesheet/5/')
+        fetch('/timesheet/5/')
             .then( response => {
                 return response.json();
             })
