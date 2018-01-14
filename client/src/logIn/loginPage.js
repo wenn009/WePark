@@ -32,7 +32,7 @@ class LoginPage extends React.Component {
 
         //TO DO Post login data.
         console.log(email);
-        fetch('http://localhost:8000/auth/login', {
+        fetch('/auth/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

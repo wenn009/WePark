@@ -53,7 +53,7 @@ class SignupPage extends React.Component {
 
     //if (this.state.errors === {}) {
     if (password === retypePassword) {
-      fetch("http://localhost:8000/auth/signup", {
+      fetch("/auth/signup", {
         method: "POST",
         headers: {
           Accept: "application/json",
