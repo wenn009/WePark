@@ -161,7 +161,7 @@ class App extends Component {
                 <MapCenterInput handleChange={this.searchZip} />
                 <Map id="testing"
                     isMarkerShown={true}
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpzlkHHmo0OJ-LpHIbogL1eXapd3R1N3o&v=3.exp&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div style={{ height: `400px`, width: `98.5%`, margin: `auto`, marginTop: `10px` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
